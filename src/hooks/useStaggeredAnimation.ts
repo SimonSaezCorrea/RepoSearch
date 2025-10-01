@@ -1,38 +1,61 @@
-import { useState, useEffect } from 'react';
-import { calculateHorizontalMasonryOrder } from '../utils/layoutUtils';
+import { useEffect, useRef, useState } from 'react';
 
 /**
- * Hook que gestiona el estado de visibilidad para una animación escalonada.
+ * Hook simplificado que gestiona animaciones solo para elementos nuevos.
  * @param itemsLength - Longitud total de los elementos.
- * @param columnCount - Número de columnas actual del layout.
+ * @param columnCount - Número de columnas actual del layout (no usado pero mantenido para compatibilidad).
+ * @param previousCount - Cantidad de elementos que ya estaban visibles (para cargas incrementales).
  * @returns Set<number> de índices que deben estar visibles para aplicar la clase de animación.
  */
-export const useStaggeredAnimation = (itemsLength: number, columnCount: number): Set<number> => {
+export const useStaggeredAnimation = (
+  itemsLength: number, 
+  _columnCount: number, 
+  previousCount: number = 0
+): Set<number> => {
   const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
+  const previousCountRef = useRef(previousCount);
   const DELAY_MS = 120;
   const INITIAL_DELAY_MS = 200;
 
   useEffect(() => {
-    // Limpiar animaciones previas (ej. al cambiar la data o el tamaño de la ventana)
-    setVisibleCards(new Set());
+    if (itemsLength === 0) return;
 
-    if (itemsLength === 0 || columnCount === 0) return;
-
-    const animateCards = () => {
-      // Usar la utilidad de layout para obtener el orden correcto
-      const horizontalOrder = calculateHorizontalMasonryOrder(itemsLength, columnCount);
+    // Si es una carga incremental (hay elementos previos)
+    if (previousCount > previousCountRef.current) {
+      // Marcar todos los elementos anteriores como visibles inmediatamente
+      const allPreviousVisible = new Set<number>();
+      for (let i = 0; i < previousCount; i++) {
+        allPreviousVisible.add(i);
+      }
+      setVisibleCards(allPreviousVisible);
       
-      horizontalOrder.forEach((originalIndex, orderIndex) => {
-        setTimeout(() => {
-          setVisibleCards(prev => new Set([...prev, originalIndex]));
-        }, orderIndex * DELAY_MS);
-      });
-    };
-
-    const initialTimer = setTimeout(animateCards, INITIAL_DELAY_MS);
-
-    return () => clearTimeout(initialTimer); // Limpieza
-  }, [itemsLength, columnCount]);
+      // Animar solo los nuevos elementos uno por uno
+      if (itemsLength > previousCount) {
+        for (let i = previousCount; i < itemsLength; i++) {
+          const index = i;
+          const delay = (i - previousCount) * DELAY_MS; // Delay relativo a los nuevos elementos
+          
+          setTimeout(() => {
+            setVisibleCards(prev => new Set([...prev, index]));
+          }, delay);
+        }
+      }
+      
+      previousCountRef.current = previousCount;
+    } else if (previousCount === 0) {
+      // Carga inicial - todos aparecen a la vez después de un pequeño delay
+      const allVisibleSet = new Set<number>();
+      for (let i = 0; i < itemsLength; i++) {
+        allVisibleSet.add(i);
+      }
+      
+      const initialTimer = setTimeout(() => {
+        setVisibleCards(allVisibleSet);
+      }, INITIAL_DELAY_MS);
+      
+      return () => clearTimeout(initialTimer);
+    }
+  }, [itemsLength, previousCount]);
 
   return visibleCards;
 };

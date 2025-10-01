@@ -3,18 +3,14 @@
 /**
  * Calcula el orden de aparición horizontal para un layout Masonry.
  * Necesario para simular la animación escalonada en el orden de las columnas.
+ * MODIFICADO: Mantiene el orden original (secuencial) en lugar de reorganizar por columnas.
  */
-export const calculateHorizontalMasonryOrder = (itemsLength: number, columnCount: number): number[] => {
+export const calculateHorizontalMasonryOrder = (itemsLength: number, _columnCount: number): number[] => {
+  // Simplemente retornamos un array secuencial para mantener el orden original
   const orderedIndices: number[] = [];
-  const itemsPerColumn = Math.ceil(itemsLength / columnCount);
   
-  for (let row = 0; row < itemsPerColumn; row++) {
-    for (let col = 0; col < columnCount; col++) {
-      const index = col * itemsPerColumn + row;
-      if (index < itemsLength) {
-        orderedIndices.push(index);
-      }
-    }
+  for (let i = 0; i < itemsLength; i++) {
+    orderedIndices.push(i);
   }
   
   return orderedIndices;
@@ -36,8 +32,8 @@ export const getResponsiveColumnCount = (): number => {
  */
 export const getAnimationClasses = (isVisible: boolean): string => {
   const baseClasses = 'break-inside-avoid mb-4 sm:mb-5 md:mb-6 inline-block w-full transition-all duration-600 ease-out';
-  const visibleClasses = 'opacity-100 translate-x-0 scale-100';
-  const hiddenClasses = 'opacity-0 -translate-x-6 scale-95';
+  const visibleClasses = 'opacity-100 translate-y-0 scale-100';
+  const hiddenClasses = 'opacity-0 translate-y-4 scale-95';
   
   return `${baseClasses} ${isVisible ? visibleClasses : hiddenClasses}`;
 };

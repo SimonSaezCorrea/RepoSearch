@@ -23,6 +23,18 @@ interface DataResult {
   items: Repository[];
 }
 
+// Estado para simular paginación y generación dinámica
+let currentPage = 1;
+let totalGeneratedItems = 0;
+const itemsPerPage = 30; // Cantidad por carga
+const originalDataLength = (Data as any).items.length;
+
+interface DataResult {
+  total_count: number;
+  incomplete_results: boolean;
+  items: Repository[];
+}
+
 const getDescription = (description: string | null): string => {
   return description || 'Sin descripción disponible';
 };
@@ -51,16 +63,71 @@ const processRepository = (item: any): Repository => ({
 
 
 /**
- * Función principal del servicio para obtener datos.
- * En un caso real, aquí iría la llamada a 'fetch' o 'axios'.
+ * Genera una copia específica de un repositorio con ID único
+ */
+const generateRepositoryCopy = (originalItem: any, copyNumber: number): any => {
+  const baseId = originalItem.id;
+  const uniqueId = baseId + (copyNumber * 10000000); // Asegura IDs únicos para miles de copias
+  
+  return {
+    ...originalItem,
+    id: uniqueId,
+    name: copyNumber === 0 ? originalItem.name : `${originalItem.name}-copy${copyNumber}`,
+    description: copyNumber === 0 
+      ? originalItem.description 
+      : originalItem.description 
+        ? `${originalItem.description} (Copia #${copyNumber})` 
+        : `Repositorio copia #${copyNumber}`
+  };
+};
+
+/**
+ * Función principal del servicio para obtener datos iniciales (solo originales).
  */
 export const getRepositoryData = (): DataResult => {
   const rawData = Data as any;
   
-  // En un caso real, podríamos añadir lógica de caché o manejo de errores aquí.
+  // Solo retornamos los datos originales, sin copias
+  const initialItems = rawData.items.slice(0, Math.min(itemsPerPage, originalDataLength));
+  totalGeneratedItems = initialItems.length;
+  
   return {
-    total_count: rawData.total_count,
-    incomplete_results: rawData.incomplete_results,
-    items: rawData.items.map(processRepository),
+    total_count: Infinity, // Podemos generar infinitas copias
+    incomplete_results: true,
+    items: initialItems.map(processRepository),
   };
+};
+
+/**
+ * Función para cargar más repositorios (genera copias dinámicamente)
+ */
+export const loadMoreRepositories = (): Repository[] => {
+  const rawData = Data as any;
+  const originalItems = rawData.items;
+  const newItems: any[] = [];
+  
+  // Determinar qué "serie" de copias estamos generando
+  const copyNumber = Math.floor(totalGeneratedItems / originalDataLength);
+  
+  // Generar los siguientes 30 elementos de la misma serie
+  for (let i = 0; i < itemsPerPage; i++) {
+    const originalIndex = (totalGeneratedItems + i) % originalDataLength;
+    
+    const originalItem = originalItems[originalIndex];
+    const generatedItem = generateRepositoryCopy(originalItem, copyNumber);
+    newItems.push(generatedItem);
+  }
+  
+  totalGeneratedItems += itemsPerPage;
+  currentPage++;
+  
+  return newItems.map(processRepository);
+};
+
+/**
+ * Función para resetear la paginación y el contador de elementos generados
+ */
+export const resetPagination = (): void => {
+  currentPage = 1;
+  totalGeneratedItems = 0;
 };

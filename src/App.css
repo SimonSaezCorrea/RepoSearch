@@ -8,9 +8,9 @@
   }
 }
 
-/* Custom styles para evitar solapamientos en masonry layout */
+/* Custom styles para masonry layout controlado */
 @layer base {
-  /* Asegurar que las columnas tengan el espaciado correcto */
+  /* Optimizaciones para masonry layout que respeta orden horizontal */
   .columns-1 > div,
   .columns-2 > div,
   .columns-3 > div,
@@ -20,24 +20,54 @@
     display: inline-block;
     width: 100%;
     vertical-align: top;
+    margin-bottom: 1rem;
   }
   
-  /* Transiciones suaves para cambios de breakpoint */
+  /* Forzar orden más horizontal en masonry */
+  .columns-1,
+  .columns-2,
+  .columns-3,
+  .columns-4 {
+    column-fill: auto;
+    orphans: 1;
+    widows: 1;
+  }
+  
+  /* Transiciones suaves para diferentes breakpoints */
   @media (min-width: 640px) and (max-width: 1023px) {
     .columns-2 {
-      column-gap: 1.25rem; /* 5 en Tailwind */
+      column-gap: 1.25rem;
+    }
+    .columns-2 > div {
+      margin-bottom: 1.25rem;
     }
   }
   
   @media (min-width: 1024px) and (max-width: 1279px) {
     .columns-3 {
-      column-gap: 1.25rem; /* 5 en Tailwind */
+      column-gap: 1.25rem;
+    }
+    .columns-3 > div {
+      margin-bottom: 1.25rem;
     }
   }
   
   @media (min-width: 1280px) {
     .columns-4 {
-      column-gap: 1.5rem; /* 6 en Tailwind */
+      column-gap: 1.5rem;
+    }
+    .columns-4 > div {
+      margin-bottom: 1.5rem;
+    }
+  }
+  
+  /* Mejorar la distribución masonry */
+  @supports (column-fill: balance-all) {
+    .columns-1,
+    .columns-2,
+    .columns-3,
+    .columns-4 {
+      column-fill: balance-all;
     }
   }
 }
