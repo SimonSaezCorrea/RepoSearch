@@ -25,18 +25,17 @@ export const calculateHorizontalMasonryOrder = (itemsLength: number, columnCount
  */
 export const getResponsiveColumnCount = (): number => {
   if (typeof window === 'undefined') return 4;
-  if (window.innerWidth >= 1280) return 4;
-  if (window.innerWidth >= 1024) return 4;
-  if (window.innerWidth >= 768) return 3;
-  if (window.innerWidth >= 640) return 2;
-  return 1;
+  if (window.innerWidth >= 1280) return 4;  // xl: 4 columnas (≥1280px)
+  if (window.innerWidth >= 1024) return 3;  // lg: 3 columnas (1024px-1279px)
+  if (window.innerWidth >= 640) return 2;   // sm: 2 columnas (640px-1023px)
+  return 1;                                 // <640px: 1 columna
 };
 
 /**
  * Genera las clases CSS para animaciones de elementos (lógica de presentación).
  */
 export const getAnimationClasses = (isVisible: boolean): string => {
-  const baseClasses = 'break-inside-avoid mb-6 inline-block w-full transition-all duration-600 ease-out';
+  const baseClasses = 'break-inside-avoid mb-4 sm:mb-5 md:mb-6 inline-block w-full transition-all duration-600 ease-out';
   const visibleClasses = 'opacity-100 translate-x-0 scale-100';
   const hiddenClasses = 'opacity-0 -translate-x-6 scale-95';
   

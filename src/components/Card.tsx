@@ -41,7 +41,7 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <article
-      className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group hover:-translate-y-1 w-full min-w-[280px]"
+      className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group hover:-translate-y-1 w-full min-w-[250px] sm:min-w-[260px] md:min-w-[280px]"
       role="button"
       tabIndex={0}
       style={{

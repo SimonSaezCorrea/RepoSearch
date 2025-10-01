@@ -22,11 +22,11 @@ const CardGrid = () => {
 
   return (
     <section 
-      className="w-full max-w-7xl mx-auto px-4 mt-8"
+      className="w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 mt-8"
       aria-label="Repositorios de GitHub"
     >
       <div 
-        className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-4 gap-6 space-y-0"
+        className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-5 md:gap-6 space-y-0"
         style={{ columnFill: 'balance' }}
       >
         {items.map((item: Repository, index: number) => (

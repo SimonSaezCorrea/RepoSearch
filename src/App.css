@@ -8,6 +8,40 @@
   }
 }
 
+/* Custom styles para evitar solapamientos en masonry layout */
+@layer base {
+  /* Asegurar que las columnas tengan el espaciado correcto */
+  .columns-1 > div,
+  .columns-2 > div,
+  .columns-3 > div,
+  .columns-4 > div {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
+  }
+  
+  /* Transiciones suaves para cambios de breakpoint */
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .columns-2 {
+      column-gap: 1.25rem; /* 5 en Tailwind */
+    }
+  }
+  
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .columns-3 {
+      column-gap: 1.25rem; /* 5 en Tailwind */
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .columns-4 {
+      column-gap: 1.5rem; /* 6 en Tailwind */
+    }
+  }
+}
+
 /* Custom styles */
 
 * {
