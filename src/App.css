@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+
+/* Custom colors in tailwindcss */
+
+@layer utilities {
+  .bg-green-buttons {
+    background-color: #238636;
+  }
+}
+
+/* Custom styles */
+
+* {
+  color: #f0f6fc;
+}
