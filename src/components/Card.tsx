@@ -1,7 +1,7 @@
 import { Github, Star } from 'lucide-react';
 import { useCallback } from 'react';
 
-import { formatNumber, formatProjectName, openInNewTab } from '../../utils/cardUtils';
+import { formatProjectName, formatRepoSize, openInNewTab } from '../utils/formatUtils';
 
 interface CardProps {
   title: string;
@@ -111,7 +111,7 @@ const Card: React.FC<CardProps> = ({
             {size && (
               <span className="flex items-center gap-1">
                 <span>📦</span>
-                <span>{formatNumber(size)}</span>
+                <span>{formatRepoSize(size)}</span>
               </span>
             )}
           </div>
