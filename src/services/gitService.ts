@@ -1,5 +1,7 @@
+import { DATA } from '../constants';
 import Data from '../utils/datos.json';
 
+// Interfaces para tipado
 export interface RepositoryOwner {
   login: string;
   avatar_url: string;
@@ -23,30 +25,25 @@ interface DataResult {
   items: Repository[];
 }
 
-// Estado para simular paginación y generación dinámica
-let currentPage = 1;
+// Estado para simulación de paginación
 let totalGeneratedItems = 0;
-const itemsPerPage = 30; // Cantidad por carga
-const originalDataLength = (Data as any).items.length;
+const originalDataLength = (Data as DataResult).items.length;
 
-interface DataResult {
-  total_count: number;
-  incomplete_results: boolean;
-  items: Repository[];
-}
-
+/**
+ * Retorna una descripción por defecto si no existe.
+ */
 const getDescription = (description: string | null): string => {
-  return description || 'Sin descripción disponible';
+  return description || DATA.DEFAULT_DESCRIPTION;
 };
 
 const getLanguage = (language: string | null): string => {
-  return language || 'No especificado';
+  return language || DATA.DEFAULT_LANGUAGE;
 };
 
 /**
  * Procesa un objeto de repositorio crudo para asegurar los tipos y valores por defecto.
  */
-const processRepository = (item: any): Repository => ({
+const processRepository = (item: Repository): Repository => ({
   id: item.id,
   name: item.name,
   owner: {
@@ -61,11 +58,10 @@ const processRepository = (item: any): Repository => ({
   language: getLanguage(item.language),
 });
 
-
 /**
  * Genera una copia específica de un repositorio con ID único
  */
-const generateRepositoryCopy = (originalItem: any, copyNumber: number): any => {
+const generateRepositoryCopy = (originalItem: Repository, copyNumber: number): Repository => {
   const baseId = originalItem.id;
   const uniqueId = baseId + (copyNumber * 10000000); // Asegura IDs únicos para miles de copias
   
@@ -85,10 +81,10 @@ const generateRepositoryCopy = (originalItem: any, copyNumber: number): any => {
  * Función principal del servicio para obtener datos iniciales (solo originales).
  */
 export const getRepositoryData = (): DataResult => {
-  const rawData = Data as any;
+  const rawData = Data as DataResult;
   
   // Solo retornamos los datos originales, sin copias
-  const initialItems = rawData.items.slice(0, Math.min(itemsPerPage, originalDataLength));
+  const initialItems = rawData.items.slice(0, Math.min(DATA.ITEMS_PER_PAGE, originalDataLength));
   totalGeneratedItems = initialItems.length;
   
   return {
@@ -102,15 +98,15 @@ export const getRepositoryData = (): DataResult => {
  * Función para cargar más repositorios (genera copias dinámicamente)
  */
 export const loadMoreRepositories = (): Repository[] => {
-  const rawData = Data as any;
+  const rawData = Data as DataResult;
   const originalItems = rawData.items;
-  const newItems: any[] = [];
+  const newItems: Repository[] = [];
   
   // Determinar qué "serie" de copias estamos generando
   const copyNumber = Math.floor(totalGeneratedItems / originalDataLength);
   
-  // Generar los siguientes 30 elementos de la misma serie
-  for (let i = 0; i < itemsPerPage; i++) {
+  // Generar los siguientes elementos de la misma serie
+  for (let i = 0; i < DATA.ITEMS_PER_PAGE; i++) {
     const originalIndex = (totalGeneratedItems + i) % originalDataLength;
     
     const originalItem = originalItems[originalIndex];
@@ -118,8 +114,7 @@ export const loadMoreRepositories = (): Repository[] => {
     newItems.push(generatedItem);
   }
   
-  totalGeneratedItems += itemsPerPage;
-  currentPage++;
+  totalGeneratedItems += DATA.ITEMS_PER_PAGE;
   
   return newItems.map(processRepository);
 };
@@ -128,6 +123,5 @@ export const loadMoreRepositories = (): Repository[] => {
  * Función para resetear la paginación y el contador de elementos generados
  */
 export const resetPagination = (): void => {
-  currentPage = 1;
   totalGeneratedItems = 0;
 };

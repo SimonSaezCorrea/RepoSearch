@@ -33,6 +33,21 @@
     widows: 1;
   }
   
+  /* Optimizaciones para MUI Masonry - reducir movimientos */
+  .MuiMasonry-root {
+    transition: none !important;
+  }
+  
+  .MuiMasonry-root > div {
+    transform-origin: top left;
+    will-change: auto; /* Optimizar para menos repaints */
+  }
+  
+  /* Prevenir layout shifts durante la carga inicial */
+  .MuiMasonry-root > div[style*="transform"] {
+    transition: opacity 0.3s ease-out !important;
+  }
+  
   /* Transiciones suaves para diferentes breakpoints */
   @media (min-width: 640px) and (max-width: 1023px) {
     .columns-2 {

@@ -1,61 +1,82 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+import { ANIMATION } from '../constants';
 
 /**
- * Hook simplificado que gestiona animaciones solo para elementos nuevos.
- * @param itemsLength - Longitud total de los elementos.
- * @param columnCount - Número de columnas actual del layout (no usado pero mantenido para compatibilidad).
- * @param previousCount - Cantidad de elementos que ya estaban visibles (para cargas incrementales).
- * @returns Set<number> de índices que deben estar visibles para aplicar la clase de animación.
+ * Hook que gestiona animaciones escalonadas para elementos de una lista.
+ * Evita el parpadeo en cargas incrementales manteniendo elementos visibles.
+ * 
+ * @param itemsLength - Número total de elementos en la lista
+ * @param previousCount - Número de elementos que ya estaban visibles (para cargas incrementales)
+ * @returns Set de índices de elementos que deben estar visibles
  */
 export const useStaggeredAnimation = (
   itemsLength: number, 
-  _columnCount: number, 
   previousCount: number = 0
 ): Set<number> => {
   const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
   const previousCountRef = useRef(previousCount);
-  const DELAY_MS = 120;
-  const INITIAL_DELAY_MS = 200;
+  const isInitialLoad = useRef(true);
+
+  /**
+   * Crea un Set con todos los índices hasta el límite especificado
+   */
+  const createVisibleSet = useCallback((limit: number): Set<number> => {
+    const set = new Set<number>();
+    for (let i = 0; i < limit; i++) {
+      set.add(i);
+    }
+    return set;
+  }, []);
+
+  /**
+   * Anima la aparición de nuevos elementos con delay escalonado
+   */
+  const animateNewElements = useCallback((startIndex: number, endIndex: number) => {
+    for (let i = startIndex; i < endIndex; i++) {
+      const orderPosition = i - startIndex;
+      const delay = orderPosition * ANIMATION.DELAY_MS;
+      
+      setTimeout(() => {
+        setVisibleCards(prev => new Set([...prev, i]));
+      }, delay);
+    }
+  }, []);
 
   useEffect(() => {
     if (itemsLength === 0) return;
 
-    // Si es una carga incremental (hay elementos previos)
-    if (previousCount > previousCountRef.current) {
-      // Marcar todos los elementos anteriores como visibles inmediatamente
-      const allPreviousVisible = new Set<number>();
-      for (let i = 0; i < previousCount; i++) {
-        allPreviousVisible.add(i);
-      }
-      setVisibleCards(allPreviousVisible);
-      
-      // Animar solo los nuevos elementos uno por uno
-      if (itemsLength > previousCount) {
-        for (let i = previousCount; i < itemsLength; i++) {
-          const index = i;
-          const delay = (i - previousCount) * DELAY_MS; // Delay relativo a los nuevos elementos
-          
-          setTimeout(() => {
-            setVisibleCards(prev => new Set([...prev, index]));
-          }, delay);
-        }
-      }
-      
-      previousCountRef.current = previousCount;
-    } else if (previousCount === 0) {
-      // Carga inicial - todos aparecen a la vez después de un pequeño delay
-      const allVisibleSet = new Set<number>();
-      for (let i = 0; i < itemsLength; i++) {
-        allVisibleSet.add(i);
-      }
+    // Manejo de carga inicial
+    if (isInitialLoad.current && previousCount === 0) {
+      const allVisibleSet = createVisibleSet(itemsLength);
       
       const initialTimer = setTimeout(() => {
         setVisibleCards(allVisibleSet);
-      }, INITIAL_DELAY_MS);
+        isInitialLoad.current = false;
+      }, ANIMATION.INITIAL_LOAD_DELAY_MS);
       
       return () => clearTimeout(initialTimer);
     }
-  }, [itemsLength, previousCount]);
+    
+    // Manejo de carga incremental
+    if (previousCount > previousCountRef.current && !isInitialLoad.current) {
+      // Asegurar que elementos previos permanezcan visibles
+      setVisibleCards(prev => {
+        const updated = new Set(prev);
+        for (let i = 0; i < previousCount; i++) {
+          updated.add(i);
+        }
+        return updated;
+      });
+      
+      // Animar solo los nuevos elementos
+      if (itemsLength > previousCount) {
+        animateNewElements(previousCount, itemsLength);
+      }
+      
+      previousCountRef.current = previousCount;
+    }
+  }, [itemsLength, previousCount, createVisibleSet, animateNewElements]);
 
   return visibleCards;
 };

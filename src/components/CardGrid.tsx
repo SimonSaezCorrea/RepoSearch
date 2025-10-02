@@ -1,96 +1,65 @@
-// components/CardGrid.tsx
+import Masonry from '@mui/lab/Masonry';
+import { memo } from 'react';
 
-import { useResponsiveColumns } from '../hooks/useResponsiveColumns';
+import { LAYOUT } from '../constants';
 import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
-import { type Repository } from '../services/gitService'; // Importa tipos
+import { type Repository } from '../services/gitService';
 import { getAnimationClasses } from '../utils/layoutUtils';
 
 import Card from './Card';
 
 interface CardGridProps {
   repositories: Repository[];
-  previousCount: number; // Cantidad de cards que ya estaban visibles
+  previousCount: number;
 }
 
+/**
+ * Componente que renderiza una cuadrícula de tarjetas de repositorios 
+ * usando MUI Masonry para layout responsivo con animaciones escalonadas.
+ */
 const CardGrid: React.FC<CardGridProps> = ({ repositories, previousCount }) => {
-  // 1. Usamos los repositorios que vienen por props
-  const items = repositories;
-  const itemsLength = items.length;
-
-  // 2. Uso de Hooks para la Lógica de UI/Layout
-  const columnCount = useResponsiveColumns();
-  const visibleCards = useStaggeredAnimation(itemsLength, columnCount, previousCount);
-
-  // 3. Distribuir items en columnas respetando orden horizontal (masonry inteligente)
-  const distributeInColumns = (items: Repository[], columns: number) => {
-    const columnArrays: Repository[][] = Array.from({ length: columns }, () => []);
-    const columnHeights = new Array(columns).fill(0);
-    
-    items.forEach((item, index) => {
-      // Para mantener cierto orden horizontal, pero optimizar altura
-      if (index < columns) {
-        // Primera fila va en orden
-        columnArrays[index].push(item);
-        columnHeights[index] += 1; // Estimación simple de altura
-      } else {
-        // Para el resto, buscar la columna más corta
-        const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
-        columnArrays[shortestColumnIndex].push(item);
-        columnHeights[shortestColumnIndex] += 1;
-      }
-    });
-    
-    return columnArrays;
-  };
-
-  const columnArrays = distributeInColumns(items, columnCount);
-
-  // El componente es ahora mucho más legible y declarativo.
+  const visibleCards = useStaggeredAnimation(repositories.length, previousCount);
 
   return (
     <section 
       className="w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 mt-8"
       aria-label="Repositorios de GitHub"
     >
-      <div 
-        className="masonry-grid"
-        data-columns={columnCount}
-        style={{ 
-          display: 'grid',
-          gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
-          gap: '1rem',
-          alignItems: 'start'
+      <Masonry
+        columns={LAYOUT.MASONRY_BREAKPOINTS}
+        spacing={LAYOUT.MASONRY_SPACING}
+        defaultHeight={200}
+        defaultColumns={4}
+        defaultSpacing={1}
+        sx={{
+          margin: 0,
+          '& > div': {
+            transition: 'none !important', // Prevenir conflictos con nuestras animaciones
+          }
         }}
       >
-        {columnArrays.map((columnItems, columnIndex) => (
-          <div key={columnIndex} className="masonry-column">
-            {columnItems.map((item: Repository) => {
-              const originalIndex = items.findIndex(originalItem => originalItem.id === item.id);
-              return (
-                <div 
-                  key={item.id}
-                  className={getAnimationClasses(visibleCards.has(originalIndex))}
-                  style={{ marginBottom: '1rem' }}
-                >
-                  <Card
-                    title={item.name}
-                    username={item.owner.login}
-                    avatar_url={item.owner.avatar_url}
-                    git_user_url={item.owner.html_url}
-                    project_url={item.html_url}
-                    description={item.description}
-                    size={item.size}
-                    stars={item.stargazers_count}
-                    language={item.language}
-                  />
-                </div>
-              );
-            })}
+        {repositories.map((repository: Repository, index: number) => (
+          <div 
+            key={repository.id}
+            className={getAnimationClasses(visibleCards.has(index))}
+          >
+            <Card
+              title={repository.name}
+              username={repository.owner.login}
+              avatar_url={repository.owner.avatar_url}
+              git_user_url={repository.owner.html_url}
+              project_url={repository.html_url}
+              description={repository.description}
+              size={repository.size}
+              stars={repository.stargazers_count}
+              language={repository.language}
+            />
           </div>
         ))}
-      </div>
+      </Masonry>
     </section>
   );
 };
 
-export default CardGrid;
+// Memoizar el componente para evitar re-renders innecesarios
+export default memo(CardGrid);

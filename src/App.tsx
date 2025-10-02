@@ -4,58 +4,67 @@ import './App.css';
 import CardGrid from './components/CardGrid';
 import HeaderSearch from './components/HeaderSearch';
 import LoadMoreButton from './components/LoadMoreButton';
+import { ANIMATION, MESSAGES } from './constants';
 import { getRepositoryData, loadMoreRepositories, type Repository } from './services/gitService';
 
 function App() {
-  // Estado para manejar repositorios y loading
+  // Estados para gestión de repositorios
   const [repositories, setRepositories] = useState<Repository[]>(() => {
     const initialData = getRepositoryData();
     return initialData.items;
   });
   const [isLoading, setIsLoading] = useState(false);
   const [hasMoreData, setHasMoreData] = useState(true);
-  const [previousCount, setPreviousCount] = useState(0); // Para rastrear cuántas cards ya estaban visibles
+  const [previousCount, setPreviousCount] = useState(0);
 
-  // Función para cargar más repositorios
-  const loadMoreRepositoriesHandler = useCallback(async () => {
-    setIsLoading(true);
-    const currentCount = repositories.length; // Guardar la cantidad actual antes de cargar más
+  /**
+   * Maneja la carga incremental de repositorios con simulación de loading
+   */
+  const handleLoadMoreRepositories = useCallback(async () => {
+    if (isLoading || !hasMoreData) return;
     
-    // Simulamos un delay para mostrar el loading
-    setTimeout(() => {
-      try {
-        const moreRepos = loadMoreRepositories();
-        
-        if (moreRepos.length === 0) {
-          setHasMoreData(false);
-        } else {
-          setPreviousCount(currentCount); // Establecer cuántas cards ya estaban visibles
-          setRepositories(prev => [...prev, ...moreRepos]);
-        }
-      } catch (error) {
-        console.error('Error cargando más repositorios:', error);
-      } finally {
-        setIsLoading(false);
+    setIsLoading(true);
+    const currentCount = repositories.length;
+    
+    try {
+      // Simular delay de red para mejor UX
+      await new Promise(resolve => setTimeout(resolve, ANIMATION.LOADING_DELAY_MS));
+      
+      const moreRepos = loadMoreRepositories();
+      
+      if (moreRepos.length === 0) {
+        setHasMoreData(false);
+      } else {
+        setPreviousCount(currentCount);
+        setRepositories(prev => [...prev, ...moreRepos]);
       }
-    }, 1500); // 1.5 segundos de delay para mostrar loading
-  }, [repositories.length]);
+    } catch (error) {
+      console.error('Error al cargar más repositorios:', error);
+      // En una app real, aquí manejarías el error con un toast o mensaje
+    } finally {
+      setIsLoading(false);
+    }
+  }, [repositories.length, isLoading, hasMoreData]);
 
   return (
     <main className="bg-gray-50 dark:bg-gray-900 transition-colors duration-500 ease-in-out min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <HeaderSearch />
         <CardGrid repositories={repositories} previousCount={previousCount} />
-        {/* Botón para cargar nuevos repositorios */}
         {hasMoreData && (
           <LoadMoreButton 
-            onClick={loadMoreRepositoriesHandler} 
+            onClick={handleLoadMoreRepositories} 
             isLoading={isLoading}
             disabled={!hasMoreData}
           />
         )}
         {!hasMoreData && (
-          <div className="text-center mt-8 text-gray-500 dark:text-gray-400">
-            <p>¡Has cargado todos los repositorios disponibles!</p>
+          <div 
+            className="text-center mt-8 text-gray-500 dark:text-gray-400"
+            role="status"
+            aria-live="polite"
+          >
+            <p>{MESSAGES.ALL_LOADED}</p>
           </div>
         )}
       </div>
