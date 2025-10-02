@@ -18,6 +18,7 @@ interface CardGridProps {
  * usando MUI Masonry para layout responsivo con animaciones escalonadas.
  */
 const CardGrid: React.FC<CardGridProps> = ({ repositories, previousCount }) => {
+  
   const visibleCards = useStaggeredAnimation(repositories.length, previousCount);
 
   return (
@@ -49,10 +50,10 @@ const CardGrid: React.FC<CardGridProps> = ({ repositories, previousCount }) => {
               avatar_url={repository.owner.avatar_url}
               git_user_url={repository.owner.html_url}
               project_url={repository.html_url}
-              description={repository.description}
+              description={repository.description || undefined}
               size={repository.size}
               stars={repository.stargazers_count}
-              language={repository.language}
+              language={repository.language || undefined}
             />
           </div>
         ))}

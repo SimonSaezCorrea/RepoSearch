@@ -14,6 +14,7 @@ export const useStaggeredAnimation = (
   itemsLength: number, 
   previousCount: number = 0
 ): Set<number> => {
+  
   const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
   const previousCountRef = useRef(previousCount);
   const isInitialLoad = useRef(true);
@@ -44,7 +45,10 @@ export const useStaggeredAnimation = (
   }, []);
 
   useEffect(() => {
-    if (itemsLength === 0) return;
+    
+    if (itemsLength === 0) {
+      return;
+    }
 
     // Manejo de carga inicial
     if (isInitialLoad.current && previousCount === 0) {
