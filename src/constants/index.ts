@@ -42,7 +42,8 @@ export const API = {
   DEFAULT_QUERY: 'javascript', // Fallback si falla la generación aleatoria
   SORT: 'updated',
   ORDER: 'desc',
-  PER_PAGE: 20,
+  PER_PAGE: 100, // Máximo permitido por GitHub para optimizar rate limiting
+  CLIENT_PAGE_SIZE: 20, // Cuántos elementos mostrar al usuario de una vez
   TIMEOUT_MS: 10000,
   // Queries de caracteres individuales y símbolos
   SINGLE_CHAR_QUERIES: [
