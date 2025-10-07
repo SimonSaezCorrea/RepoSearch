@@ -10,6 +10,8 @@ interface BufferState {
   hasMoreApiData: boolean;
   isPreloading: boolean;
   currentQuery: string;
+  currentSort: string;
+  currentOrder: string;
 }
 
 let state: BufferState = {
@@ -20,6 +22,8 @@ let state: BufferState = {
   hasMoreApiData: true,
   isPreloading: false,
   currentQuery: '',
+  currentSort: 'updated',
+  currentOrder: 'desc',
 };
 
 /**
@@ -34,6 +38,8 @@ export const resetBufferState = (): void => {
     hasMoreApiData: true,
     isPreloading: false,
     currentQuery: '',
+    currentSort: 'updated',
+    currentOrder: 'desc',
   };
 };
 
@@ -53,6 +59,22 @@ export const setCurrentQuery = (query: string): void => {
  * Obtiene la query actual
  */
 export const getCurrentQuery = (): string => state.currentQuery;
+
+/**
+ * Actualiza los parámetros de ordenamiento
+ */
+export const setSortParams = (sort: string, order: string): void => {
+  state.currentSort = sort;
+  state.currentOrder = order;
+};
+
+/**
+ * Obtiene los parámetros de ordenamiento actuales
+ */
+export const getSortParams = (): { sort: string; order: string } => ({
+  sort: state.currentSort,
+  order: state.currentOrder,
+});
 
 /**
  * Añade elementos al buffer de repositorios

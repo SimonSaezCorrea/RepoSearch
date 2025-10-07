@@ -2,12 +2,14 @@ import { useCallback, useState } from 'react';
 
 import { MESSAGES } from '../constants';
 import {
-    generateNewRandomQuery,
-    getPaginationState,
-    getRepositoryData,
-    loadMoreRepositories,
-    resetPagination,
-    type Repository
+  generateNewRandomQuery,
+  getPaginationState,
+  getRepositoryData,
+  loadMoreRepositories,
+  resetPagination,
+  searchRepositoriesManual,
+  type Repository,
+  type SearchFilters,
 } from '../services/gitService';
 
 interface UseRepositoryDataResult {
@@ -25,6 +27,11 @@ interface UseRepositoryDataResult {
   loadInitialData: () => Promise<void>;
   loadMoreRepositories: () => Promise<void>;
   generateNewSearch: () => Promise<void>;
+  searchManual: (
+    query: string,
+    type: 'repository' | 'user',
+    filters: SearchFilters
+  ) => Promise<void>;
   retryLastOperation: () => Promise<void>;
 }
 
@@ -49,27 +56,35 @@ export const useRepositoryData = (): UseRepositoryDataResult => {
   /**
    * Actualiza el estado con los datos de paginación
    */
-  const updatePaginationState = useCallback((items: Repository[], query: string, type: string) => {
-    const paginationState = getPaginationState();
-    setCurrentQuery(query);
-    setQueryType(type);
-    setHasMoreData(paginationState.hasMore);
-    if (items.length > 0) {
-      setError(null);
-      setRetryCount(0);
-      setIsRateLimited(false);
-      setRateLimitReset(null);
-    }
-  }, []);
+  const updatePaginationState = useCallback(
+    (items: Repository[], query: string, type: string) => {
+      const paginationState = getPaginationState();
+      setCurrentQuery(query);
+      setQueryType(type);
+      setHasMoreData(paginationState.hasMore);
+      if (items.length > 0) {
+        setError(null);
+        setRetryCount(0);
+        setIsRateLimited(false);
+        setRateLimitReset(null);
+      }
+    },
+    []
+  );
 
   /**
    * Maneja errores de rate limiting de GitHub API
    */
   const handleRateLimitError = useCallback((error: Error) => {
-    if (error.message.includes('API límite alcanzado') || error.message.includes('rate limit')) {
+    if (
+      error.message.includes('API límite alcanzado') ||
+      error.message.includes('rate limit')
+    ) {
       setIsRateLimited(true);
       // Intentar extraer el tiempo de reset del mensaje de error
-      const resetMatch = error.message.match(/(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)/);
+      const resetMatch = error.message.match(
+        /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)/
+      );
       if (resetMatch) {
         setRateLimitReset(new Date(resetMatch[1]));
       } else {
@@ -87,21 +102,21 @@ export const useRepositoryData = (): UseRepositoryDataResult => {
       setIsInitialLoading(true);
       setError(null);
       setRetryCount(0);
-      
+
       const result = await getRepositoryData();
-      
+
       if (result.items.length === 0) {
         // Intentar hasta MAX_RETRY_ATTEMPTS veces
         let attempts = 0;
         let successResult = null;
-        
+
         while (attempts < MAX_RETRY_ATTEMPTS) {
           attempts++;
           setRetryCount(attempts);
-          
+
           // Generar nueva query y reintentar
           generateNewRandomQuery();
-          
+
           try {
             const retryResult = await getRepositoryData();
             if (retryResult.items.length > 0) {
@@ -115,17 +130,27 @@ export const useRepositoryData = (): UseRepositoryDataResult => {
             }
           }
         }
-        
+
         if (successResult) {
           setRepositories(successResult.items);
-          updatePaginationState(successResult.items, successResult.currentQuery || '', successResult.queryType || '');
+          updatePaginationState(
+            successResult.items,
+            successResult.currentQuery || '',
+            successResult.queryType || ''
+          );
         } else {
           setRepositories([]);
-          setError('No se encontraron repositorios después de varios intentos. Intenta generar una nueva búsqueda.');
+          setError(
+            'No se encontraron repositorios después de varios intentos. Intenta generar una nueva búsqueda.'
+          );
         }
       } else {
         setRepositories(result.items);
-        updatePaginationState(result.items, result.currentQuery || '', result.queryType || '');
+        updatePaginationState(
+          result.items,
+          result.currentQuery || '',
+          result.queryType || ''
+        );
       }
     } catch (err) {
       console.error('Error loading initial data:', err);
@@ -143,14 +168,14 @@ export const useRepositoryData = (): UseRepositoryDataResult => {
    */
   const loadMoreRepositoriesData = useCallback(async () => {
     if (isLoading || !hasMoreData || isInitialLoading) return;
-    
+
     setIsLoading(true);
     setError(null);
     const currentCount = repositories.length;
-    
+
     try {
       const result = await loadMoreRepositories();
-      
+
       if (result.items.length === 0) {
         setHasMoreData(false);
       } else {
@@ -168,36 +193,42 @@ export const useRepositoryData = (): UseRepositoryDataResult => {
     } finally {
       setIsLoading(false);
     }
-  }, [repositories.length, isLoading, hasMoreData, isInitialLoading, handleRateLimitError]);
+  }, [
+    repositories.length,
+    isLoading,
+    hasMoreData,
+    isInitialLoading,
+    handleRateLimitError,
+  ]);
 
   /**
    * Genera una nueva búsqueda completamente aleatoria
    */
   const generateNewSearch = useCallback(async () => {
     if (isInitialLoading || isLoading) return;
-    
+
     try {
       setIsInitialLoading(true);
       setError(null);
       setRetryCount(0);
-      
+
       // Resetear todo y generar nueva query
       resetPagination();
       generateNewRandomQuery();
-      
+
       const result = await getRepositoryData();
-      
+
       if (result.items.length === 0) {
         // Intentar hasta MAX_RETRY_ATTEMPTS veces para esta nueva búsqueda también
         let attempts = 0;
         let successResult = null;
-        
+
         while (attempts < MAX_RETRY_ATTEMPTS) {
           attempts++;
           setRetryCount(attempts);
-          
+
           generateNewRandomQuery();
-          
+
           try {
             const retryResult = await getRepositoryData();
             if (retryResult.items.length > 0) {
@@ -211,17 +242,27 @@ export const useRepositoryData = (): UseRepositoryDataResult => {
             }
           }
         }
-        
+
         if (successResult) {
           setRepositories(successResult.items);
-          updatePaginationState(successResult.items, successResult.currentQuery || '', successResult.queryType || '');
+          updatePaginationState(
+            successResult.items,
+            successResult.currentQuery || '',
+            successResult.queryType || ''
+          );
         } else {
           setRepositories([]);
-          setError('No se encontraron repositorios después de varios intentos. Intenta de nuevo más tarde.');
+          setError(
+            'No se encontraron repositorios después de varios intentos. Intenta de nuevo más tarde.'
+          );
         }
       } else {
         setRepositories(result.items);
-        updatePaginationState(result.items, result.currentQuery || '', result.queryType || '');
+        updatePaginationState(
+          result.items,
+          result.currentQuery || '',
+          result.queryType || ''
+        );
         setRetryCount(0);
       }
     } catch (err) {
@@ -230,7 +271,57 @@ export const useRepositoryData = (): UseRepositoryDataResult => {
     } finally {
       setIsInitialLoading(false);
     }
-  }, [isInitialLoading, isLoading, updatePaginationState, handleRateLimitError]);
+  }, [
+    isInitialLoading,
+    isLoading,
+    updatePaginationState,
+    handleRateLimitError,
+  ]);
+
+  /**
+   * Búsqueda manual con filtros
+   */
+  const searchManual = useCallback(
+    async (
+      query: string,
+      type: 'repository' | 'user',
+      filters: SearchFilters
+    ) => {
+      if (isInitialLoading || isLoading) return;
+
+      try {
+        setIsInitialLoading(true);
+        setError(null);
+        setRetryCount(0);
+
+        const result = await searchRepositoriesManual(query, type, filters);
+
+        if (result.items.length === 0) {
+          setRepositories([]);
+          setError(
+            'No se encontraron repositorios con los criterios especificados.'
+          );
+        } else {
+          setRepositories(result.items);
+          updatePaginationState(
+            result.items,
+            result.currentQuery || '',
+            result.queryType || ''
+          );
+          setRetryCount(0);
+        }
+      } catch (err) {
+        console.error('Error en búsqueda manual:', err);
+        if (err instanceof Error) {
+          handleRateLimitError(err);
+        }
+        setError(err instanceof Error ? err.message : MESSAGES.ERROR_LOADING);
+      } finally {
+        setIsInitialLoading(false);
+      }
+    },
+    [isInitialLoading, isLoading, updatePaginationState, handleRateLimitError]
+  );
 
   /**
    * Reintenta la última operación
@@ -258,6 +349,7 @@ export const useRepositoryData = (): UseRepositoryDataResult => {
     loadInitialData,
     loadMoreRepositories: loadMoreRepositoriesData,
     generateNewSearch,
+    searchManual,
     retryLastOperation,
   };
 };

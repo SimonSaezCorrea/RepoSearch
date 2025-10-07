@@ -90,11 +90,16 @@ export const fetchFromGitHubApi = async (url: string): Promise<GitHubApiResponse
 /**
  * Construye la URL de la API con los parámetros especificados
  */
-export const buildApiUrl = (query: string, page: number): string => {
+export const buildApiUrl = (
+  query: string, 
+  page: number, 
+  sort?: string, 
+  order?: string
+): string => {
   const params = new URLSearchParams({
     q: query,
-    sort: API.SORT,
-    order: API.ORDER,
+    sort: sort || API.SORT,
+    order: order || API.ORDER,
     per_page: API.PER_PAGE.toString(),
     page: page.toString(),
   });
