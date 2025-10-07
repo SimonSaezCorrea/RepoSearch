@@ -1,12 +1,11 @@
 import Masonry from '@mui/lab/Masonry';
 import { memo } from 'react';
 
-import { LAYOUT } from '../constants';
-import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
-import { type Repository } from '../services/gitService';
-import { getAnimationClasses } from '../utils/layoutUtils';
-
-import Card from './Card';
+import { LAYOUT } from '../../constants/Layout';
+import { useStaggeredAnimation } from '../../hooks/useStaggeredAnimation';
+import { type Repository } from '../../services/gitService';
+import Card from '../Card';
+import './CardGrid.css';
 
 interface CardGridProps {
   repositories: Repository[];
@@ -23,7 +22,7 @@ const CardGrid: React.FC<CardGridProps> = ({ repositories, previousCount }) => {
 
   return (
     <section 
-      className="w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 mt-8"
+      className="card-grid-container"
       aria-label="Repositorios de GitHub"
     >
       <Masonry
@@ -42,7 +41,7 @@ const CardGrid: React.FC<CardGridProps> = ({ repositories, previousCount }) => {
         {repositories.map((repository: Repository, index: number) => (
           <div 
             key={repository.id}
-            className={getAnimationClasses(visibleCards.has(index))}
+            className={`card-grid-item ${visibleCards.has(index) ? 'card-grid-item--visible' : 'card-grid-item--hidden'}`}
           >
             <Card
               title={repository.name}

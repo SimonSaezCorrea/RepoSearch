@@ -1,6 +1,7 @@
 import { memo } from 'react';
 
-import { MESSAGES } from '../constants';
+import { MESSAGES } from '../../constants/css_menssages';
+import './LoadingSpinner.css';
 
 interface LoadingSpinnerProps {
   message?: string;
@@ -14,28 +15,20 @@ interface LoadingSpinnerProps {
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   message = MESSAGES.LOADING,
   size = 'md',
-  className = "flex justify-center items-center"
+  className = "loading-spinner-wrapper"
 }) => {
-  const sizeClasses = {
-    sm: 'h-6 w-6',
-    md: 'h-12 w-12',
-    lg: 'h-16 w-16'
-  };
-
-  const spinnerSize = sizeClasses[size];
-
   return (
     <div className={className}>
-      <div className="text-center">
+      <div className="loading-spinner-container">
         <div 
-          className={`animate-spin rounded-full border-b-2 border-blue-500 mx-auto mb-4 ${spinnerSize}`}
+          className={`loading-spinner ${size === 'lg' ? 'loading-spinner--large' : ''} ${size === 'sm' ? 'loading-spinner--small' : ''}`}
           role="status"
           aria-label="Cargando contenido"
         >
-          <span className="sr-only">Cargando...</span>
+          <span className="loading-spinner-sr-only">Cargando...</span>
         </div>
         {message && (
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="loading-spinner-text">
             {message}
           </p>
         )}

@@ -1,0 +1,135 @@
+/* Importar variables */
+@import '../../styles/shared/variables.css';
+
+/* ==============================================
+   ERROR MESSAGE - Componente de Error
+   ============================================== */
+
+.error-message-wrapper {
+  text-align: center;
+}
+
+.error-message-container {
+  text-align: center;
+  padding: var(--spacing-5xl);
+}
+
+.error-message-icon-container {
+  color: var(--color-error);
+  margin-bottom: var(--spacing-lg);
+}
+
+.error-message-icon {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto var(--spacing-sm) auto;
+}
+
+.error-message-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+@media (prefers-color-scheme: dark) {
+  .error-message-title {
+    color: var(--color-text-secondary-dark);
+  }
+}
+
+.error-message-text {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-lg);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .error-message-text {
+    color: var(--color-text-tertiary-dark);
+  }
+}
+
+.error-message-retry-button {
+  background-color: var(--color-primary-blue);
+  color: var(--color-text-inverse);
+  padding: var(--spacing-sm) var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  font-weight: 500;
+}
+
+.error-message-retry-button:hover {
+  background-color: var(--color-primary-blue);
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.error-message-retry-button:focus {
+  outline: 2px solid var(--color-primary-blue);
+  outline-offset: 2px;
+}
+
+.error-message-retry-button:active {
+  transform: translateY(0);
+}
+
+/* Variantes de error */
+.error-message-container--network {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-error);
+}
+
+@media (prefers-color-scheme: dark) {
+  .error-message-container--network {
+    background: linear-gradient(135deg, #1f1411, #180a0a);
+  }
+}
+
+.error-message-container--404 {
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-secondary);
+}
+
+@media (prefers-color-scheme: dark) {
+  .error-message-container--404 {
+    background: linear-gradient(135deg, #1f2937, #111827);
+  }
+}
+
+.error-message-container--warning {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-warning);
+}
+
+@media (prefers-color-scheme: dark) {
+  .error-message-container--warning {
+    background: linear-gradient(135deg, #1e1611, #1a1308);
+  }
+}
+
+/* Estados inline para errores menores */
+.error-message-inline {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-bg-error);
+  border: 1px solid var(--color-border-error);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  color: var(--color-text-error);
+}
+
+.error-message-inline .error-message-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  margin: 0;
+}

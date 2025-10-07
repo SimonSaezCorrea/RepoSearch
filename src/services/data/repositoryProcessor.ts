@@ -1,4 +1,4 @@
-import { DATA } from '../../constants';
+import { DATA } from '../../constants/APIGitHub';
 import type { Repository } from '../api/gitHubApi';
 
 /**

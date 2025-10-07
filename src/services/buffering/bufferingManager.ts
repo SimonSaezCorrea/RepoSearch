@@ -1,4 +1,4 @@
-import { API } from '../../constants';
+import { API } from '../../constants/APIGitHub';
 import type { Repository } from '../api/gitHubApi';
 import { buildApiUrl, fetchFromGitHubApi } from '../api/gitHubApi';
 import { processRepository } from '../data/repositoryProcessor';

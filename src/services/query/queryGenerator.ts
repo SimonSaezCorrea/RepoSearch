@@ -1,4 +1,4 @@
-import { API } from '../../constants';
+import { API } from '../../constants/APIGitHub';
 
 /**
  * Genera un número completamente aleatorio usando múltiples fuentes de entropía

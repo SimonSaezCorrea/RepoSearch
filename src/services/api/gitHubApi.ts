@@ -1,4 +1,4 @@
-import { API } from '../../constants';
+import { API } from "../../constants/APIGitHub";
 
 // Interfaces para tipado de la respuesta de GitHub API
 export interface RepositoryOwner {

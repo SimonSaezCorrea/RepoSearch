@@ -35,8 +35,7 @@ function App() {
   }, [loadInitialData]);
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
-      {/* Controles de búsqueda fijos en la parte superior */}
+    <div className="app-container">{/* Controles de búsqueda fijos en la parte superior */}
       <SearchControls
         onManualSearch={searchManual}
         onRandomSearch={generateNewSearch}
@@ -48,17 +47,17 @@ function App() {
       
       {/* Alerta de Rate Limiting */}
       {isRateLimited && (
-        <div className="bg-orange-50 dark:bg-orange-900/20 border-b border-orange-200 dark:border-orange-800 px-4 py-3">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <span className="text-2xl">⚠️</span>
+        <div className="alert alert-warning">
+          <div className="alert-container">
+            <div className="alert-content">
+              <div className="alert-icon">
+                <span className="alert-icon-emoji">⚠️</span>
               </div>
-              <div className="ml-3">
-                <h3 className="text-sm font-medium text-orange-800 dark:text-orange-200">
+              <div className="alert-text">
+                <h3 className="alert-title alert-title--warning">
                   Límite de API alcanzado
                 </h3>
-                <p className="text-sm text-orange-700 dark:text-orange-300">
+                <p className="alert-message alert-message--warning">
                   Has alcanzado el límite de peticiones de GitHub API. 
                   {rateLimitReset && (
                     <span> Se reinicia: {rateLimitReset.toLocaleString()}</span>
@@ -72,8 +71,8 @@ function App() {
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 border-b border-red-200 dark:border-red-800 px-4 py-3">
-          <div className="max-w-7xl mx-auto">
+        <div className="alert alert-error">
+          <div className="alert-container">
             <ErrorMessage 
               message={error} 
               onRetry={retryLastOperation}
@@ -101,9 +100,9 @@ function App() {
       
       {/* Debug Panel - Temporal */}
       {import.meta.env.DEV && (
-        <div className="bg-yellow-50 dark:bg-yellow-900/20 border-t border-yellow-200 dark:border-yellow-800 p-2">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-xs text-yellow-700 dark:text-yellow-300">
+        <div className="alert alert-info">
+          <div className="alert-container">
+            <div className="alert-message alert-message--info">
               🐛 Debug: {repositories.length} repos • {isLoading ? 'Loading...' : 'Idle'} • 
               Query: "{currentQuery}" • Type: {queryType} • Retries: {retryCount}
             </div>

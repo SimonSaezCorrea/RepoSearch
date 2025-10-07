@@ -1,0 +1,154 @@
+/* Importar variables */
+@import '../../styles/shared/variables.css';
+
+/* ==============================================
+   SCROLLABLE CARD AREA - Área de Cards con Scroll
+   ============================================== */
+
+.scrollable-card-area {
+  flex: 1;
+  overflow: hidden;
+}
+
+.scrollable-card-area-content {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--spacing-lg);
+}
+
+/* Webkit Scrollbar Styling */
+.scrollable-card-area-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-card-area-content::-webkit-scrollbar-track {
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+}
+
+.scrollable-card-area-content::-webkit-scrollbar-thumb {
+  background: var(--color-border-secondary);
+  border-radius: var(--radius-full);
+  transition: background-color var(--transition-normal);
+}
+
+.scrollable-card-area-content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  .scrollable-card-area-content::-webkit-scrollbar-track {
+    background: var(--color-bg-tertiary-dark);
+  }
+  
+  .scrollable-card-area-content::-webkit-scrollbar-thumb {
+    background: var(--color-border-secondary-dark);
+  }
+  
+  .scrollable-card-area-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-border-primary-dark);
+  }
+}
+
+@media (min-width: 640px) {
+  .scrollable-card-area-content {
+    padding: var(--spacing-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .scrollable-card-area-content {
+    padding: var(--spacing-3xl);
+  }
+}
+
+.scrollable-card-area-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+}
+
+@media (min-width: 640px) {
+  .scrollable-card-area-container {
+    padding-left: var(--spacing-2xl);
+    padding-right: var(--spacing-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .scrollable-card-area-container {
+    padding-left: var(--spacing-3xl);
+    padding-right: var(--spacing-3xl);
+  }
+}
+
+/* ==============================================
+   BOTÓN CARGAR MÁS
+   ============================================== */
+
+.scrollable-card-area-load-more {
+  margin-top: var(--spacing-4xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ==============================================
+   ESTADOS FINALES
+   ============================================== */
+
+.scrollable-card-area-end-state {
+  text-align: center;
+  padding: var(--spacing-4xl);
+}
+
+.scrollable-card-area-end-message {
+  color: var(--color-text-tertiary);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+  .scrollable-card-area-end-message {
+    color: var(--color-text-tertiary-dark);
+  }
+}
+
+/* ==============================================
+   ESTADO VACÍO
+   ============================================== */
+
+.scrollable-card-area-empty-state {
+  text-align: center;
+  padding: var(--spacing-6xl);
+}
+
+.scrollable-card-area-empty-icon {
+  font-size: 3.75rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+.scrollable-card-area-empty-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+@media (prefers-color-scheme: dark) {
+  .scrollable-card-area-empty-title {
+    color: var(--color-text-primary-dark);
+  }
+}
+
+.scrollable-card-area-empty-message {
+  color: var(--color-text-tertiary);
+  font-size: 0.875rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .scrollable-card-area-empty-message {
+    color: var(--color-text-tertiary-dark);
+  }
+}

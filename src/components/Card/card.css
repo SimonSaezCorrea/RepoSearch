@@ -1,0 +1,292 @@
+/* Importar variables */
+@import '../../styles/shared/variables.css';
+
+/* ==============================================
+   CARD - Componente de Tarjeta de Repositorio
+   ============================================== */
+
+.card {
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border-secondary);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  width: 100%;
+  min-width: 250px;
+  transition: all var(--transition-slow);
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+@media (min-width: 640px) {
+  .card {
+    min-width: 260px;
+  }
+}
+
+@media (min-width: 768px) {
+  .card {
+    min-width: 280px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .card {
+    background-color: var(--color-bg-secondary-dark);
+    border-color: var(--color-border-secondary-dark);
+  }
+}
+
+/* ==============================================
+   CARD HEADER - Avatar, Usuario y Estrellas
+   ============================================== */
+
+.card-header {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border-tertiary);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-header {
+    border-bottom-color: var(--color-border-secondary-dark);
+  }
+}
+
+.card-user-info {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Avatar del Usuario */
+.card-avatar-container {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 2px solid var(--color-primary-blue);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform var(--transition-normal);
+}
+
+.card-avatar-container:hover {
+  transform: scale(1.1);
+}
+
+.card-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Badge de Usuario/Lenguaje */
+.card-language-badge {
+  margin-left: var(--spacing-md);
+  flex-shrink: 0;
+}
+
+.card-language {
+  background-color: var(--color-bg-tertiary);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-language {
+    background-color: var(--color-bg-tertiary-dark);
+  }
+}
+
+.card-language-text {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-language-text {
+    color: var(--color-text-secondary-dark);
+  }
+}
+
+/* Espaciador Flexible */
+.card-spacer {
+  flex: 1;
+}
+
+/* Información de Estrellas */
+.card-stars {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex-shrink: 0;
+}
+
+.card-star-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-yellow);
+  fill: currentColor;
+}
+
+.card-star-count {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-star-count {
+    color: var(--color-text-secondary-dark);
+  }
+}
+
+/* ==============================================
+   CARD CONTENT - Título y Descripción
+   ============================================== */
+
+.card-content {
+  padding: var(--spacing-lg);
+}
+
+.card-content > * + * {
+  margin-top: var(--spacing-lg);
+}
+
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.25;
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-title {
+    color: var(--color-text-primary-dark);
+  }
+}
+
+.card-description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: var(--spacing-lg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-description {
+    color: var(--color-text-tertiary-dark);
+  }
+}
+
+/* Metadatos del Repositorio */
+.card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  margin-top: var(--spacing-lg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-meta {
+    color: var(--color-text-tertiary-dark);
+  }
+}
+
+.card-meta-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.card-size-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* ==============================================
+   CARD FOOTER - Tecnología y Enlaces
+   ============================================== */
+
+.card-footer {
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-tertiary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-footer {
+    background-color: var(--color-bg-tertiary-dark);
+  }
+}
+
+.card-footer-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* Badge de Tecnología */
+.card-tech-badge {
+  background: linear-gradient(to right, var(--color-primary-blue), var(--color-secondary-purple));
+  color: var(--color-text-inverse);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Enlace a GitHub */
+.card-github-link {
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.card-github-link:hover {
+  background-color: var(--color-hover-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-github-link:hover {
+    background-color: var(--color-hover-bg-dark);
+  }
+}
+
+.card-github-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-normal);
+}
+
+.card-github-link:hover .card-github-icon {
+  color: var(--color-text-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-github-icon {
+    color: var(--color-text-tertiary-dark);
+  }
+  
+  .card-github-link:hover .card-github-icon {
+    color: var(--color-text-primary-dark);
+  }
+}

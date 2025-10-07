@@ -1,4 +1,4 @@
-import { API } from '../../constants';
+import { API } from '../../constants/APIGitHub';
 import type { Repository } from '../api/gitHubApi';
 
 // Estado global para manejo de paginación y buffering

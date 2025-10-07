@@ -1,0 +1,122 @@
+/* Importar variables */
+@import '../../styles/shared/variables.css';
+
+/* ==============================================
+   CARD GRID - Layout Masonry
+   ============================================== */
+
+.card-grid-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+/* MUI Masonry Overrides */
+.MuiMasonry-root {
+  width: 100%;
+  margin: 0;
+}
+
+.MuiMasonry-root .card {
+  margin-bottom: var(--spacing-lg);
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* Optimización de Rendimiento Masonry */
+.card-grid-item {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  margin-bottom: var(--spacing-lg);
+  transition: opacity var(--transition-slow) ease-out;
+}
+
+@media (min-width: 640px) {
+  .card-grid-item {
+    margin-bottom: var(--spacing-xl);
+  }
+}
+
+@media (min-width: 768px) {
+  .card-grid-item {
+    margin-bottom: var(--spacing-2xl);
+  }
+}
+
+.card-grid-item--visible {
+  opacity: 1;
+}
+
+.card-grid-item--hidden {
+  opacity: 0;
+}
+
+/* Grid Responsivo Manual (Fallback) */
+.card-grid-fallback {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+@media (min-width: 640px) {
+  .card-grid-fallback {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .card-grid-fallback {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-grid-fallback {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .card-grid-fallback {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+
+/* Estados del Grid */
+.card-grid-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: var(--color-text-secondary);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-grid-loading {
+    color: var(--color-text-secondary-dark);
+  }
+}
+
+.card-grid-empty {
+  text-align: center;
+  padding: var(--spacing-4xl);
+  color: var(--color-text-tertiary);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-grid-empty {
+    color: var(--color-text-tertiary-dark);
+  }
+}
+
+.card-grid-error {
+  text-align: center;
+  padding: var(--spacing-4xl);
+  color: var(--color-text-error);
+  background-color: var(--color-bg-error);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-error);
+}

@@ -1,0 +1,64 @@
+/* Importar variables */
+@import '../../styles/shared/variables.css';
+
+/* ==============================================
+   HEADER SEARCH - Encabezado de Búsqueda
+   ============================================== */
+
+.header-search {
+  color: var(--color-text-primary);
+  transition: color var(--transition-slow);
+  text-align: center;
+  margin-bottom: var(--spacing-4xl);
+}
+
+@media (prefers-color-scheme: dark) {
+  .header-search {
+    color: var(--color-text-primary-dark);
+  }
+}
+
+.header-search-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-lg);
+  background: linear-gradient(to right, var(--color-primary-blue), var(--color-secondary-purple));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.header-search-subtitle {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-2xl);
+}
+
+@media (prefers-color-scheme: dark) {
+  .header-search-subtitle {
+    color: var(--color-text-tertiary-dark);
+  }
+}
+
+.header-search-button {
+  background: linear-gradient(to right, var(--color-accent-green), var(--color-primary-blue));
+  color: var(--color-text-inverse);
+  padding: var(--spacing-md) var(--spacing-2xl);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-normal);
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  font-weight: 500;
+}
+
+.header-search-button:hover {
+  background: linear-gradient(to right, var(--color-accent-green), var(--color-primary-blue));
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.header-search-button:focus {
+  outline: 2px solid var(--color-primary-blue);
+  outline-offset: 2px;
+}

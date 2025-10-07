@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { MESSAGES } from '../constants';
+import { MESSAGES } from '../constants/css_menssages';
 import {
   generateNewRandomQuery,
   getPaginationState,

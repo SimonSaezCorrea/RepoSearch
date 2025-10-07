@@ -1,6 +1,7 @@
 import { memo } from 'react';
 
-import { CSS_CLASSES, MESSAGES } from '../constants';
+import { MESSAGES } from '../../constants/css_menssages';
+import './LoadMoreButton.css';
 
 interface LoadMoreButtonProps {
   onClick: () => void;
@@ -17,12 +18,11 @@ const LoadMoreButton: React.FC<LoadMoreButtonProps> = ({
   disabled = false 
 }) => {
   const isButtonDisabled = disabled || isLoading;
-  const buttonClasses = `${CSS_CLASSES.BUTTON_BASE} ${isButtonDisabled ? CSS_CLASSES.BUTTON_DISABLED : CSS_CLASSES.BUTTON_ACTIVE}`;
   
   return (
-    <div className="flex justify-center mt-8">
+    <div className="load-more-button-container">
       <button
-        className={buttonClasses}
+        className={`load-more-button ${isButtonDisabled ? 'load-more-button--disabled' : 'load-more-button--active'}`}
         onClick={onClick}
         disabled={isButtonDisabled}
         aria-label={isLoading ? MESSAGES.LOADING_ARIA_LABEL : MESSAGES.LOAD_MORE_ARIA_LABEL}

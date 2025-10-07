@@ -1,14 +1,3 @@
-// utils/formatUtils.ts
-
-/**
- * Formatea números grandes con sufijos (K, M, B).
- */
-export const formatNumber = (num: number): string => {
-  // Simplificando, ya que en el Card original se usa en 'stars',
-  // y se usa 'formatRepoSize' para el tamaño del repositorio.
-  return num.toLocaleString(); 
-};
-
 /**
  * Formatea el tamaño de un repositorio de KB a un formato más amigable.
  */

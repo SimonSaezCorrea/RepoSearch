@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { ANIMATION } from '../constants';
+import { ANIMATION } from '../constants/animation';
 
 /**
  * Hook que gestiona animaciones escalonadas para elementos de una lista.
