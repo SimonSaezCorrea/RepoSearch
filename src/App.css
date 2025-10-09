@@ -1,3 +1,219 @@
 /* Importar estilos base globales */
 @import './styles/shared/variables.css';
 @import './styles/shared/base.css';
+
+/* ==============================================
+   APP LAYOUT - Sidebar Design
+   ============================================== */
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+}
+
+/* Sidebar */
+.app-sidebar {
+  width: 350px;
+  min-width: 350px;
+  background: linear-gradient(135deg, 
+    var(--color-primary) 0%, 
+    var(--color-primary-dark) 100%);
+  border-right: 1px solid var(--color-border-primary);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  overflow: hidden; /* Cambiado de auto a hidden para evitar scroll en el contenedor */
+  z-index: 1000;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Área principal de contenido */
+.app-main-content {
+  flex: 1;
+  margin-left: 350px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Alertas en área principal */
+.app-alerts {
+  padding: var(--spacing-md);
+  background-color: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border-primary);
+}
+
+/* Área de contenido scrolleable */
+.app-content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==============================================
+   ALERTAS Y UTILIDADES
+   ============================================== */
+
+/* Alertas */
+.alert {
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-md);
+  border: 1px solid transparent;
+}
+
+.alert-warning {
+  background-color: #fef3cd;
+  border-color: #ffeaa7;
+  color: #856404;
+}
+
+.alert-error {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+.alert-info {
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  color: #0c5460;
+}
+
+.alert-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.alert-content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+}
+
+.alert-icon {
+  flex-shrink: 0;
+}
+
+.alert-icon-emoji {
+  font-size: 1.25rem;
+}
+
+.alert-text {
+  flex: 1;
+}
+
+.alert-title {
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+.alert-title--warning {
+  color: #856404;
+}
+
+.alert-message {
+  margin: 0;
+}
+
+.alert-message--warning {
+  color: #856404;
+}
+
+.alert-message--info {
+  color: #0c5460;
+  font-size: 0.875rem;
+}
+
+/* Utilidades Flex */
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .app-sidebar {
+    width: 100%;
+    min-width: 100%;
+    position: relative;
+    height: auto;
+    min-height: auto;
+  }
+  
+  .app-main-content {
+    margin-left: 0;
+  }
+  
+  .app-container {
+    flex-direction: column;
+  }
+  
+  .app-alerts {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .app-container {
+    background-color: var(--color-bg-primary-dark);
+  }
+  
+  .app-sidebar {
+    background: linear-gradient(135deg, 
+      var(--color-primary-dark) 0%, 
+      #1a2332 100%);
+    border-right-color: var(--color-border-primary-dark);
+  }
+  
+  .app-alerts {
+    background-color: var(--color-bg-secondary-dark);
+    border-bottom-color: var(--color-border-primary-dark);
+  }
+  
+  .alert-warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-color: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+  }
+  
+  .alert-error {
+    background-color: rgba(220, 53, 69, 0.1);
+    border-color: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+  }
+  
+  .alert-info {
+    background-color: rgba(13, 202, 240, 0.1);
+    border-color: rgba(13, 202, 240, 0.2);
+    color: #0dcaf0;
+  }
+  
+  .alert-title--warning {
+    color: #ffc107;
+  }
+  
+  .alert-message--warning {
+    color: rgba(255, 193, 7, 0.8);
+  }
+  
+  .alert-message--info {
+    color: rgba(13, 202, 240, 0.8);
+  }
+}

@@ -1,7 +1,7 @@
-import Masonry from '@mui/lab/Masonry';
 import { memo } from 'react';
 
-import { LAYOUT } from '../../constants/Layout';
+import { useMasonry } from '../../hooks/useMasonry';
+import { useResponsiveColumns } from '../../hooks/useResponsiveColumns';
 import { useStaggeredAnimation } from '../../hooks/useStaggeredAnimation';
 import { type Repository } from '../../services/gitService';
 import Card from '../Card';
@@ -14,28 +14,44 @@ interface CardGridProps {
 
 /**
  * Componente que renderiza una cuadrícula de tarjetas de repositorios 
- * usando MUI Masonry para layout responsivo con animaciones escalonadas.
+ * usando Masonry personalizado para layout responsivo con animaciones escalonadas.
  */
 const CardGrid: React.FC<CardGridProps> = ({ repositories, previousCount }) => {
   
   const visibleCards = useStaggeredAnimation(repositories.length, previousCount);
+  const { columns, spacingHorizontal, spacingVertical } = useResponsiveColumns();
+  
+  // Convertir spacing a píxeles (asumiendo 16px por unidad)
+  const gapHorizontalInPixels = spacingHorizontal * 16;
+  const gapVerticalInPixels = spacingVertical * 16;
+  
+  const { containerRef, isReady } = useMasonry({
+    columns,
+    gapHorizontal: gapHorizontalInPixels,
+    gapVertical: gapVerticalInPixels,
+    items: repositories
+  });
 
   return (
     <section 
       className="card-grid-container"
       aria-label="Repositorios de GitHub"
     >
-      <Masonry
-        columns={LAYOUT.MASONRY_BREAKPOINTS}
-        spacing={LAYOUT.MASONRY_SPACING}
-        defaultHeight={200}
-        defaultColumns={4}
-        defaultSpacing={1}
-        sx={{
-          margin: 0,
-          '& > div': {
-            transition: 'none !important', // Prevenir conflictos con nuestras animaciones
-          }
+      {/* Skeleton loader mientras se organiza el layout */}
+      {!isReady && repositories.length > 0 && (
+        <div className="masonry-loading">
+          <div className="loading-message">Organizando layout...</div>
+        </div>
+      )}
+      
+      <div 
+        ref={containerRef}
+        className="custom-masonry-container"
+        style={{
+          position: 'relative',
+          width: '100%',
+          opacity: isReady ? 1 : 0,
+          transition: 'opacity 0.5s ease'
         }}
       >
         {repositories.map((repository: Repository, index: number) => (
@@ -56,7 +72,7 @@ const CardGrid: React.FC<CardGridProps> = ({ repositories, previousCount }) => {
             />
           </div>
         ))}
-      </Masonry>
+      </div>
     </section>
   );
 };

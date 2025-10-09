@@ -2,63 +2,60 @@
 @import '../../styles/shared/variables.css';
 
 /* ==============================================
-   HEADER SEARCH - Encabezado de Búsqueda
+   HEADER SEARCH - Encabezado de Búsqueda para Sidebar
    ============================================== */
 
 .header-search {
-  color: var(--color-text-primary);
-  transition: color var(--transition-slow);
+  color: white;
   text-align: center;
-  margin-bottom: var(--spacing-4xl);
-}
-
-@media (prefers-color-scheme: dark) {
-  .header-search {
-    color: var(--color-text-primary-dark);
-  }
+  margin-bottom: 0;
 }
 
 .header-search-title {
-  font-size: 2.25rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  margin-bottom: var(--spacing-lg);
-  background: linear-gradient(to right, var(--color-primary-blue), var(--color-secondary-purple));
+  margin-bottom: var(--spacing-md);
+  background: linear-gradient(135deg, #ffffff, #e2e8f0);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+  line-height: 1.2;
 }
 
 .header-search-subtitle {
-  font-size: 1.125rem;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-2xl);
-}
-
-@media (prefers-color-scheme: dark) {
-  .header-search-subtitle {
-    color: var(--color-text-tertiary-dark);
-  }
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.4;
 }
 
 .header-search-button {
-  background: linear-gradient(to right, var(--color-accent-green), var(--color-primary-blue));
-  color: var(--color-text-inverse);
-  padding: var(--spacing-md) var(--spacing-2xl);
-  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-lg);
   transition: all var(--transition-normal);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  box-shadow: var(--shadow-lg);
   font-weight: 500;
+  font-size: 0.875rem;
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 220px;
 }
 
 .header-search-button:hover {
-  background: linear-gradient(to right, var(--color-accent-green), var(--color-primary-blue));
-  opacity: 0.9;
-  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .header-search-button:focus {
-  outline: 2px solid var(--color-primary-blue);
+  outline: 2px solid rgba(255, 255, 255, 0.4);
   outline-offset: 2px;
+}
+
+.header-search-button:active {
+  transform: translateY(0);
 }

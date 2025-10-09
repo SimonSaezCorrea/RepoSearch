@@ -15,6 +15,8 @@
   overflow-y: auto;
   overflow-x: hidden;
   padding: var(--spacing-lg);
+  /* Aislar el scroll del área de cards */
+  overscroll-behavior: contain;
 }
 
 /* Webkit Scrollbar Styling */
@@ -65,7 +67,7 @@
 
 .scrollable-card-area-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1200px; /* Base: pantallas normales */
   margin: 0 auto;
   padding-left: var(--spacing-lg);
   padding-right: var(--spacing-lg);
@@ -82,6 +84,31 @@
   .scrollable-card-area-container {
     padding-left: var(--spacing-3xl);
     padding-right: var(--spacing-3xl);
+  }
+}
+
+/* Breakpoints específicos para pantallas ultra-anchas */
+@media (min-width: 1700px) {
+  .scrollable-card-area-container {
+    max-width: 1600px; /* 4 columnas */
+  }
+}
+
+@media (min-width: 2100px) {
+  .scrollable-card-area-container {
+    max-width: 2400px; /* 5 columnas */
+  }
+}
+
+@media (min-width: 2600px) {
+  .scrollable-card-area-container {
+    max-width: 2800px; /* 6 columnas */
+  }
+}
+
+@media (min-width: 3200px) {
+  .scrollable-card-area-container {
+    max-width: 3400px; /* 7 columnas para ultra-wide */
   }
 }
 
