@@ -1,0 +1,378 @@
+/* Importar variables */
+@import '../../../shared/styles/shared/variables.css';
+
+/* ==============================================
+   SEARCH CONTROLS - Adaptado para Sidebar
+   ============================================== */
+
+.search-controls-header {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+.search-controls-container {
+  padding: 0;
+  margin: 0;
+  max-width: none;
+}
+
+/* ==============================================
+   TÍTULO PRINCIPAL - Removido para Sidebar
+   ============================================== */
+
+.search-controls-title {
+  display: none; /* El título ahora está en HeaderSearch */
+}
+
+/* ==============================================
+   LAYOUT PRINCIPAL
+   ============================================== */
+
+.search-controls-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  color: white;
+}
+
+/* ==============================================
+   GRUPO DE INPUTS
+   ============================================== */
+
+.search-controls-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.search-controls-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.search-controls-type-select {
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: var(--spacing-md);
+  font-size: 0.875rem;
+  outline: none;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(10px);
+  margin-bottom: var(--spacing-sm);
+}
+
+.search-controls-type-select option {
+  background-color: var(--color-primary-dark);
+  color: white;
+}
+
+.search-controls-type-select:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.search-controls-input {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.875rem;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(10px);
+  margin-bottom: var(--spacing-sm);
+}
+
+.search-controls-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-controls-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.search-controls-button {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.search-controls-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.search-controls-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.search-controls-button:disabled:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: none;
+}
+
+/* Botón de Búsqueda Aleatoria */
+.search-controls-random-button {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.search-controls-random-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.search-controls-random-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==============================================
+   FILTROS EXPANDIBLES
+   ============================================== */
+
+.search-controls-filters-container {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  margin-top: var(--spacing-lg);
+}
+
+.search-controls-filters-toggle {
+  width: 100%;
+  padding: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  color: white;
+}
+
+.search-controls-filters-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.search-controls-filters-title {
+  font-weight: 500;
+  color: white;
+  font-size: 0.875rem;
+}
+
+.search-controls-filters-content {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.05);
+  overflow: visible; /* Permitir que los dropdowns se muestren fuera del contenedor */
+  position: relative;
+  z-index: 1;
+}
+
+.search-controls-filters-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+  overflow: visible; /* Importante: permitir overflow para los dropdowns */
+}
+
+/* Campos de Filtro */
+.search-controls-filter-field {
+  display: block;
+  position: relative; /* Posicionamiento relativo para los dropdowns */
+  overflow: visible; /* Permitir que los dropdowns se extiendan */
+  z-index: 1;
+}
+
+.search-controls-filter-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: var(--spacing-xs);
+}
+
+.search-controls-filter-input {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: var(--spacing-sm);
+  font-size: 0.75rem;
+  outline: none;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(10px);
+}
+
+.search-controls-filter-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search-controls-filter-input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* ==============================================
+   INFORMACIÓN DE BÚSQUEDA
+   ============================================== */
+
+.search-controls-info {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  backdrop-filter: blur(10px);
+}
+
+.search-controls-info-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: var(--spacing-sm);
+}
+
+.search-controls-info-query {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: var(--spacing-xs);
+}
+
+.search-controls-info-count {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ==============================================
+   RESPONSIVE DESIGN
+   ============================================== */
+
+@media (max-width: 768px) {
+  .search-controls-main {
+    gap: var(--spacing-md);
+  }
+  
+  .search-controls-input-group {
+    gap: var(--spacing-sm);
+  }
+  
+  .search-controls-input,
+  .search-controls-type-select,
+  .search-controls-button {
+    padding: var(--spacing-sm);
+    font-size: 0.8rem;
+  }
+  
+  .search-controls-filters-container {
+    margin-top: var(--spacing-md);
+  }
+}
+/* ==============================================
+   INFORMACIÓN DE BÚSQUEDA
+   ============================================== */
+
+.search-controls-info {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background-color: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-lg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .search-controls-info {
+    background-color: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.8);
+  }
+}
+
+.search-controls-info-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+@media (min-width: 640px) {
+  .search-controls-info-content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.search-controls-info-details {
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .search-controls-info-details {
+    text-align: left;
+  }
+}
+
+.search-controls-info-text {
+  font-size: 0.875rem;
+  color: #1d4ed8;
+}
+
+@media (prefers-color-scheme: dark) {
+  .search-controls-info-text {
+    color: #93c5fd;
+  }
+}
+
+.search-controls-info-query {
+  font-weight: 600;
+}
+
+.search-controls-info-type {
+  margin-left: var(--spacing-sm);
+}
+
+.search-controls-info-count {
+  margin-left: var(--spacing-sm);
+}

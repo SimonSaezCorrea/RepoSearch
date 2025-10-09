@@ -1,6 +1,5 @@
 /* Importar estilos base globales */
-@import './styles/shared/variables.css';
-@import './styles/shared/base.css';
+@import './shared/styles/shared/base.css';
 
 /* ==============================================
    APP LAYOUT - Sidebar Design

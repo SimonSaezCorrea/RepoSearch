@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
 
 import './App.css';
-import ErrorMessage from './components/ErrorMessage';
-import LoadingSpinner from './components/LoadingSpinner';
-import ScrollableCardArea from './components/ScrollableCardArea';
-import Sidebar from './components/Sidebar';
-import { useRepositoryData } from './hooks/useRepositoryData';
+import { ScrollableCardArea } from './features/repository';
+import { Sidebar } from './features/search';
+import { ErrorMessage, LoadingSpinner, useRepositoryData } from './shared';
 
 function App() {
   const {
