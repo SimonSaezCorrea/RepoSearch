@@ -1,16 +1,16 @@
 import { type SearchFilters, type SearchResponse } from '../../features/search/types/search';
 
 import {
-    getItemsFromBuffer,
-    resetBuffering
-} from './functions/bufferingManager';
-import { generateRandomQuery, getQueryType } from './functions/queryGenerator';
+  getItemsFromBuffer,
+  resetBuffering
+} from './buffering/bufferingManager';
+import { generateRandomQuery, getQueryType } from './query/queryGenerator';
 import {
-    getAllLoadedRepositories as getBufferedRepositories,
-    getCurrentQuery,
-    getPaginationInfo,
-    setCurrentQuery,
-    setSortParams,
+  getAllLoadedRepositories as getBufferedRepositories,
+  getCurrentQuery,
+  getPaginationInfo,
+  setCurrentQuery,
+  setSortParams,
 } from './state/bufferState';
 import type { Repository } from './type/github';
 
