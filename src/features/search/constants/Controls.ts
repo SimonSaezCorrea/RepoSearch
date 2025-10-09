@@ -1,5 +1,7 @@
 import { type SelectOption } from "../types/search";
+
 export const SORT_OPTIONS: SelectOption[] = [
+  { value: 'relevance', label: '🎯 Relevancia' },
   { value: 'updated', label: '🕒 Más reciente' },
   { value: 'stars', label: '⭐ Más estrellas' },
   { value: 'created', label: '🆕 Más nuevo' },
@@ -9,6 +11,7 @@ export const SORT_OPTIONS: SelectOption[] = [
 export const SEARCH_TYPE_OPTIONS: SelectOption[] = [
   { value: 'repository', label: '📦 Repositorios', icon: '📦' },
   { value: 'user', label: '👤 Usuarios', icon: '👤' },
+  { value: 'both', label: '🔍 Ambos', icon: '🔍' },
 ];
 
 export const ORDER_OPTIONS: SelectOption[] = [
@@ -16,16 +19,4 @@ export const ORDER_OPTIONS: SelectOption[] = [
   { value: 'asc', label: '⬆️ Ascendente' },
 ];
 
-export const LANGUAGE_OPTIONS: SelectOption[] = [
-  'JavaScript', 'TypeScript', 'Python', 'Java', 'Go', 'Rust', 'C++', 'C#', 
-  'PHP', 'Ruby', 'Swift', 'Kotlin', 'Dart', 'Vue', 'React'
-].map(lang => ({ value: lang.toLowerCase(), label: lang }));
-
-export const STAR_RANGE_OPTIONS: SelectOption[] = [
-  { value: '>1', label: '⭐ Más de 1 estrella' },
-  { value: '>10', label: '⭐ Más de 10 estrellas' },
-  { value: '>50', label: '⭐ Más de 50 estrellas' },
-  { value: '>100', label: '⭐ Más de 100 estrellas' },
-  { value: '>500', label: '⭐ Más de 500 estrellas' },
-  { value: '>1000', label: '⭐ Más de 1000 estrellas' },
-];
+// Eliminamos LANGUAGE_OPTIONS y STAR_RANGE_OPTIONS ya que ahora serán campos de texto libre

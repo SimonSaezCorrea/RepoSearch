@@ -4,10 +4,15 @@ import { type SearchFilters, type SearchType } from '../types/search';
 
 // Definición de los filtros iniciales para resetear o comenzar
 const INITIAL_FILTERS: SearchFilters = {
-  sort: 'updated',
+  sort: 'relevance',
   order: 'desc',
   language: null,
   stars: null,
+  organization: null,
+  createdDate: null,
+  pushedDate: null,
+  topic: null,
+  size: null,
 };
 
 /**
@@ -49,15 +54,36 @@ export const useSearchForm = (
   /**
    * Maneja el envío del formulario, validando la entrada y llamando a la función
    * de búsqueda proporcionada por el componente padre (App.tsx).
+   * Permite búsquedas vacías (aleatorias) si no hay input pero sí filtros.
    */
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
       
+      if (isLoading) return;
+      
       const query = searchInput.trim();
-      if (query && !isLoading) {
+      
+      // Si hay query, búsqueda normal
+      if (query) {
         onManualSearch(query, searchType, filters);
+        return;
       }
+      
+      // Si no hay query pero hay filtros aplicados, hacer búsqueda con filtros
+      const hasFilters = Object.values(filters).some(value => 
+        value !== null && value !== 'relevance' && value !== 'desc'
+      );
+      
+      if (hasFilters) {
+        // Búsqueda con filtros pero sin query específico
+        onManualSearch('', searchType, filters);
+        return;
+      }
+      
+      // Si no hay query ni filtros, búsqueda aleatoria
+      // Llamar a la función de búsqueda aleatoria a través de un query vacío
+      onManualSearch('', searchType, filters);
     },
     [searchInput, searchType, filters, onManualSearch, isLoading]
   );

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { type SearchFilters } from '../../features/search/types/search';
+import { type SearchFilters, type SearchType } from '../../features/search/types/search';
 import {
     generateNewRandomQuery,
     getPaginationState,
@@ -29,7 +29,7 @@ interface UseRepositoryDataResult {
   generateNewSearch: () => Promise<void>;
   searchManual: (
     query: string,
-    type: 'repository' | 'user',
+    type: SearchType,
     filters: SearchFilters
   ) => Promise<void>;
   retryLastOperation: () => Promise<void>;
@@ -284,7 +284,7 @@ export const useRepositoryData = (): UseRepositoryDataResult => {
   const searchManual = useCallback(
     async (
       query: string,
-      type: 'repository' | 'user',
+      type: SearchType,
       filters: SearchFilters
     ) => {
       if (isInitialLoading || isLoading) return;

@@ -47,7 +47,7 @@ export const getRepositoryData = async (): Promise<SearchResponse> => {
  */
 export const searchRepositoriesManual = async (
   query: string,
-  searchType: 'repository' | 'user',
+  searchType: 'repository' | 'user' | 'both',
   filters: SearchFilters
 ): Promise<SearchResponse> => {
   try {
@@ -55,27 +55,70 @@ export const searchRepositoriesManual = async (
     resetBuffering();
 
     // Configurar parámetros de ordenamiento
-    setSortParams(filters.sort, filters.order);
+    // Si es relevancia, no establecer sort para que GitHub use su algoritmo
+    if (filters.sort !== 'relevance') {
+      setSortParams(filters.sort, filters.order);
+    }
 
     // Construir query con filtros
     let fullQuery = query;
 
-    if (searchType === 'user') {
-      fullQuery = `user:${query}`;
+    // Verificar si hay filtros aplicados (diferentes a los valores por defecto)
+    const hasFilters = filters.language || 
+                      (filters.stars !== null && filters.stars !== undefined) ||
+                      filters.organization ||
+                      filters.createdDate ||
+                      filters.pushedDate ||
+                      filters.topic ||
+                      filters.size ||
+                      (filters.sort !== 'relevance') ||
+                      (filters.order !== 'desc');
+
+    // Si no hay query ni filtros, generar una búsqueda aleatoria
+    if (!query.trim() && !hasFilters) {
+      fullQuery = generateRandomQuery();
+    }
+    // Si solo hay filtros sin query, dejar fullQuery vacío para que solo se usen los filtros
+
+    // Manejar tipo de búsqueda
+    if (searchType === 'user' && fullQuery.trim()) {
+      fullQuery = `user:${fullQuery}`;
+    } else if (searchType === 'both' && fullQuery.trim()) {
+      // Para búsqueda en ambos, se busca el término tanto en repos como en usuarios
+      // GitHub buscará en nombres de repo, descripciones, y nombres de usuario
+      fullQuery = `${fullQuery} in:name,description`;
     }
 
     // Agregar filtros a la query
+    const filterParts = [];
+    
     if (filters.language) {
-      fullQuery += ` language:${filters.language}`;
+      filterParts.push(`language:${filters.language}`);
     }
-    if (filters.stars) {
-      fullQuery += ` stars:${filters.stars}`;
+    if (filters.stars !== null && filters.stars !== undefined) {
+      filterParts.push(`stars:>=${filters.stars}`);
+    }
+    if (filters.organization) {
+      filterParts.push(`org:${filters.organization}`);
+    }
+    if (filters.createdDate) {
+      filterParts.push(`created:>=${filters.createdDate}`);
+    }
+    if (filters.pushedDate) {
+      filterParts.push(`pushed:>=${filters.pushedDate}`);
+    }
+    if (filters.topic) {
+      filterParts.push(`topic:${filters.topic}`);
     }
     if (filters.size) {
-      fullQuery += ` size:${filters.size}`;
+      filterParts.push(`size:${filters.size}`);
     }
-    if (filters.pushed) {
-      fullQuery += ` pushed:${filters.pushed}`;
+
+    // Combinar query base con filtros
+    if (fullQuery.trim() && filterParts.length > 0) {
+      fullQuery = `${fullQuery.trim()} ${filterParts.join(' ')}`;
+    } else if (filterParts.length > 0) {
+      fullQuery = filterParts.join(' ');
     }
 
     setCurrentQuery(fullQuery);
@@ -83,7 +126,11 @@ export const searchRepositoriesManual = async (
     // Cargar datos desde el buffer
     const { items } = await getItemsFromBuffer();
 
-    const queryType = searchType === 'user' ? 'Por Usuario' : 'Manual';
+    const queryType = searchType === 'user' ? 'Por Usuario' : 
+                     searchType === 'both' ? 'Búsqueda Completa' : 
+                     query.trim() ? 'Manual' : 
+                     hasFilters ? 'Solo Filtros' : 
+                     'Aleatoria';
 
     return {
       items,

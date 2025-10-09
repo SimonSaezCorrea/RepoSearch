@@ -4,13 +4,15 @@ import { type Repository } from "../../../shared/api/type/github";
  * Define la estructura de los filtros de búsqueda manual.
  */
 export interface SearchFilters {
-  sort: 'updated' | 'stars' | 'created' | 'forks';
+  sort: 'relevance' | 'updated' | 'stars' | 'created' | 'forks';
   order: 'desc' | 'asc';
   language?: string | null;
-  stars?: string | null;
+  stars?: number | null;
+  organization?: string | null;
+  createdDate?: string | null;
+  pushedDate?: string | null;
+  topic?: string | null;
   size?: string | null;
-  pushed?: string | null;
-  topics?: string[] | null;
 }
 
 /**
@@ -27,13 +29,13 @@ export interface SearchResponse {
 /**
  * Define los tipos de búsqueda que el usuario puede seleccionar.
  */
-export type SearchType = 'repository' | 'user';
+export type SearchType = 'repository' | 'user' | 'both';
 
 /**
  * Props para el componente Sidebar.
  */
 export interface SidebarProps {
-  onManualSearch: (query: string, type: 'repository' | 'user', filters: SearchFilters) => void;
+  onManualSearch: (query: string, type: SearchType, filters: SearchFilters) => void;
   onRandomSearch: () => void;
   isLoading?: boolean;
   currentQuery?: string;

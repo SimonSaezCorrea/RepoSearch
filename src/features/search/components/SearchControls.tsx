@@ -1,11 +1,9 @@
 import React, { memo } from 'react';
 
 import {
-  LANGUAGE_OPTIONS,
   ORDER_OPTIONS,
   SEARCH_TYPE_OPTIONS,
-  SORT_OPTIONS,
-  STAR_RANGE_OPTIONS
+  SORT_OPTIONS
 } from '../constants/Controls';
 import { useSearchForm } from '../hooks/useSearchForm';
 import '../styles/SearchControls.css';
@@ -84,18 +82,26 @@ const SearchControls: React.FC<SearchControlsProps> = ({
                 type="text"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                placeholder={searchType === 'repository' ? 'Buscar repositorios...' : 'Buscar usuarios...'}
+                placeholder={
+                  searchType === 'repository' ? 'Buscar repositorios...' : 
+                  searchType === 'user' ? 'Buscar usuarios...' : 
+                  'Buscar repositorios y usuarios...'
+                }
                 className="search-controls-input"
                 disabled={isLoading}
-                aria-label={`Buscar ${searchType === 'repository' ? 'repositorios' : 'usuarios'}`}
+                aria-label={`Buscar ${
+                  searchType === 'repository' ? 'repositorios' : 
+                  searchType === 'user' ? 'usuarios' : 
+                  'repositorios y usuarios'
+                }`}
               />
 
               {/* Botón de Búsqueda */}
               <button
                 type="submit"
-                disabled={isLoading || !searchInput.trim()}
+                disabled={isLoading}
                 className="search-controls-button"
-                aria-disabled={isLoading || !searchInput.trim()}
+                aria-disabled={isLoading}
               >
                 {isLoading ? '🔄' : '🔍'} Buscar
               </button>
@@ -153,41 +159,87 @@ const SearchControls: React.FC<SearchControlsProps> = ({
                 {/* Lenguaje (Language) */}
                 <div className="search-controls-filter-field">
                   <label className="search-controls-filter-label">Lenguaje</label>
-                  <CustomSelect
-                    options={[
-                      { value: '', label: 'Cualquier lenguaje' },
-                      ...LANGUAGE_OPTIONS
-                    ]}
+                  <input
+                    type="text"
                     value={filters.language || ''}
-                    onChange={(value) => updateFilter('language', value)}
+                    onChange={(e) => updateFilter('language', e.target.value)}
                     className="search-controls-filter-input"
-                    placeholder="Seleccionar lenguaje"
-                    isCompact={true}
-                    maxMenuHeight={160}
-                    menuPlacement="bottom"
+                    placeholder="ej: JavaScript, Python, Go..."
+                    disabled={isLoading}
                   />
                 </div>
 
                 {/* Estrellas (Stars) */}
                 <div className="search-controls-filter-field">
-                  <label className="search-controls-filter-label">Estrellas</label>
-                  <CustomSelect
-                    options={[
-                      { value: '', label: 'Cualquier cantidad' },
-                      ...STAR_RANGE_OPTIONS
-                    ]}
-                    value={filters.stars || ''}
-                    onChange={(value) => updateFilter('stars', value)}
+                  <label className="search-controls-filter-label">Estrellas (mínimo)</label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={filters.stars !== null ? filters.stars : ''}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === '') {
+                        updateFilter('stars', null);
+                      } else {
+                        const numValue = parseInt(value);
+                        updateFilter('stars', isNaN(numValue) ? null : numValue);
+                      }
+                    }}
                     className="search-controls-filter-input"
-                    placeholder="Rango de estrellas"
-                    isCompact={true}
-                    maxMenuHeight={180}
-                    smartPlacement={true}
-                    menuPlacement="auto"
+                    placeholder="ej: 0, 10, 100..."
+                    disabled={isLoading}
                   />
                 </div>
-                {/* Nota: Se omiten 'size', 'pushed', 'topics' para mantener el foco en la refactorización principal, 
-                pero se ha sentado la base para incluirlos con 'updateFilter'. */}
+
+                {/* Organización */}
+                <div className="search-controls-filter-field">
+                  <label className="search-controls-filter-label">Organización</label>
+                  <input
+                    type="text"
+                    value={filters.organization || ''}
+                    onChange={(e) => updateFilter('organization', e.target.value)}
+                    className="search-controls-filter-input"
+                    placeholder="ej: microsoft, google..."
+                    disabled={isLoading}
+                  />
+                </div>
+
+                {/* Fecha de creación */}
+                <div className="search-controls-filter-field">
+                  <label className="search-controls-filter-label">Creado después de</label>
+                  <input
+                    type="date"
+                    value={filters.createdDate || ''}
+                    onChange={(e) => updateFilter('createdDate', e.target.value)}
+                    className="search-controls-filter-input"
+                    disabled={isLoading}
+                  />
+                </div>
+
+                {/* Fecha de último push */}
+                <div className="search-controls-filter-field">
+                  <label className="search-controls-filter-label">Último push después de</label>
+                  <input
+                    type="date"
+                    value={filters.pushedDate || ''}
+                    onChange={(e) => updateFilter('pushedDate', e.target.value)}
+                    className="search-controls-filter-input"
+                    disabled={isLoading}
+                  />
+                </div>
+
+                {/* Tópico */}
+                <div className="search-controls-filter-field">
+                  <label className="search-controls-filter-label">Tópico</label>
+                  <input
+                    type="text"
+                    value={filters.topic || ''}
+                    onChange={(e) => updateFilter('topic', e.target.value)}
+                    className="search-controls-filter-input"
+                    placeholder="ej: web, mobile, ai..."
+                    disabled={isLoading}
+                  />
+                </div>
               </div>
             </div>
           )}
