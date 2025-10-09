@@ -1,16 +1,16 @@
 import { type SearchFilters, type SearchResponse } from '../../features/search/types/search';
 
 import {
-  getItemsFromBuffer,
-  resetBuffering
+    getItemsFromBuffer,
+    resetBuffering
 } from './buffering/bufferingManager';
 import { generateRandomQuery, getQueryType } from './query/queryGenerator';
 import {
-  getAllLoadedRepositories as getBufferedRepositories,
-  getCurrentQuery,
-  getPaginationInfo,
-  setCurrentQuery,
-  setSortParams,
+    getAllLoadedRepositories as getBufferedRepositories,
+    getCurrentQuery,
+    getPaginationInfo,
+    setCurrentQuery,
+    setSortParams,
 } from './state/bufferState';
 import type { Repository } from './type/github';
 
@@ -46,8 +46,8 @@ export const getRepositoryData = async (): Promise<SearchResponse> => {
  * Función para búsqueda manual con filtros
  */
 export const searchRepositoriesManual = async (
-  query: string,
-  searchType: 'repository' | 'user' | 'both',
+  repositoryQuery: string,
+  userQuery: string,
   filters: SearchFilters
 ): Promise<SearchResponse> => {
   try {
@@ -61,32 +61,47 @@ export const searchRepositoriesManual = async (
     }
 
     // Construir query con filtros
-    let fullQuery = query;
+    let fullQuery = '';
 
-    // Verificar si hay filtros aplicados (diferentes a los valores por defecto)
-    const hasFilters = filters.language || 
-                      (filters.stars !== null && filters.stars !== undefined) ||
-                      filters.organization ||
-                      filters.createdDate ||
-                      filters.pushedDate ||
-                      filters.topic ||
-                      filters.size ||
-                      (filters.sort !== 'relevance') ||
-                      (filters.order !== 'desc');
+    // Verificar si hay filtros avanzados aplicados (excluyendo sort y order que siempre tienen valores)
+    const hasAdvancedFilters = filters.language || 
+                              (filters.stars !== null && filters.stars !== undefined) ||
+                              filters.organization ||
+                              filters.createdDate ||
+                              filters.pushedDate ||
+                              filters.topic ||
+                              filters.size;
 
-    // Si no hay query ni filtros, generar una búsqueda aleatoria
-    if (!query.trim() && !hasFilters) {
-      fullQuery = generateRandomQuery();
+    // Construir la query combinando repositorio y usuario
+    const queryParts = [];
+    
+    if (repositoryQuery.trim()) {
+      queryParts.push(repositoryQuery.trim());
     }
-    // Si solo hay filtros sin query, dejar fullQuery vacío para que solo se usen los filtros
+    
+    if (userQuery.trim()) {
+      queryParts.push(`user:${userQuery.trim()}`);
+    }
 
-    // Manejar tipo de búsqueda
-    if (searchType === 'user' && fullQuery.trim()) {
-      fullQuery = `user:${fullQuery}`;
-    } else if (searchType === 'both' && fullQuery.trim()) {
-      // Para búsqueda en ambos, se busca el término tanto en repos como en usuarios
-      // GitHub buscará en nombres de repo, descripciones, y nombres de usuario
-      fullQuery = `${fullQuery} in:name,description`;
+    // Si no hay queries pero hay filtros avanzados, usar solo filtros
+    if (queryParts.length === 0 && hasAdvancedFilters) {
+      fullQuery = '';
+    }
+    // Si no hay queries ni filtros avanzados, no hacer búsqueda (no generar aleatoria)
+    else if (queryParts.length === 0 && !hasAdvancedFilters) {
+      // No hacer búsqueda - esto no debería llegar aquí por la validación en useSearchForm
+      // pero lo mantenemos como fallback
+      return {
+        items: [],
+        total_count: 0,
+        incomplete_results: false,
+        currentQuery: '',
+        queryType: 'Sin criterios',
+      };
+    }
+    // Si hay queries, combinarlos
+    else if (queryParts.length > 0) {
+      fullQuery = queryParts.join(' ');
     }
 
     // Agregar filtros a la query
@@ -126,11 +141,19 @@ export const searchRepositoriesManual = async (
     // Cargar datos desde el buffer
     const { items } = await getItemsFromBuffer();
 
-    const queryType = searchType === 'user' ? 'Por Usuario' : 
-                     searchType === 'both' ? 'Búsqueda Completa' : 
-                     query.trim() ? 'Manual' : 
-                     hasFilters ? 'Solo Filtros' : 
-                     'Aleatoria';
+    // Determinar el tipo de query basado en los inputs
+    let queryType = '';
+    if (repositoryQuery.trim() && userQuery.trim()) {
+      queryType = 'Repositorio y Usuario';
+    } else if (repositoryQuery.trim()) {
+      queryType = 'Por Repositorio';
+    } else if (userQuery.trim()) {
+      queryType = 'Por Usuario';
+    } else if (hasAdvancedFilters) {
+      queryType = 'Solo Filtros';
+    } else {
+      queryType = 'Sin criterios';
+    }
 
     return {
       items,

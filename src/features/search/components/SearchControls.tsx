@@ -1,13 +1,12 @@
 import React, { memo } from 'react';
 
 import {
-  ORDER_OPTIONS,
-  SEARCH_TYPE_OPTIONS,
-  SORT_OPTIONS
+    ORDER_OPTIONS,
+    SORT_OPTIONS
 } from '../constants/Controls';
 import { useSearchForm } from '../hooks/useSearchForm';
 import '../styles/SearchControls.css';
-import { type SearchFilters, type SearchType } from '../types/search';
+import { type SearchFilters } from '../types/search';
 
 import CustomSelect from './CustomSelect';
 
@@ -15,7 +14,7 @@ import CustomSelect from './CustomSelect';
 export type { SearchFilters };
 
 interface SearchControlsProps {
-  onManualSearch: (query: string, type: SearchType, filters: SearchFilters) => void;
+  onManualSearch: (repositoryQuery: string, userQuery: string, filters: SearchFilters) => void;
   isLoading?: boolean;
   currentQuery?: string;
   queryType?: string;
@@ -35,12 +34,12 @@ const SearchControls: React.FC<SearchControlsProps> = ({
 }) => {
   
   const {
-    searchInput,
-    searchType,
+    repositoryInput,
+    userInput,
     showFilters,
     filters,
-    setSearchInput,
-    setSearchType,
+    setRepositoryInput,
+    setUserInput,
     toggleFilters,
     updateFilter,
     handleSubmit,
@@ -64,36 +63,26 @@ const SearchControls: React.FC<SearchControlsProps> = ({
         <div className="search-controls-main">
           <div className="search-controls-input-group">
             <form onSubmit={handleSubmit} className="search-controls-input-container">
-              {/* Selector de Tipo de Búsqueda */}
-              <CustomSelect
-                options={SEARCH_TYPE_OPTIONS}
-                value={searchType}
-                onChange={(value) => setSearchType(value as SearchType)}
-                placeholder="Tipo de búsqueda"
-                isDisabled={isLoading}
-                className="search-controls-type-select"
-                isCompact={true}
-                maxMenuHeight={120}
-                menuPlacement="bottom"
-              />
-
-              {/* Input de Búsqueda */}
+              {/* Input de Repositorio */}
               <input
                 type="text"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                placeholder={
-                  searchType === 'repository' ? 'Buscar repositorios...' : 
-                  searchType === 'user' ? 'Buscar usuarios...' : 
-                  'Buscar repositorios y usuarios...'
-                }
+                value={repositoryInput}
+                onChange={(e) => setRepositoryInput(e.target.value)}
+                placeholder="Buscar repositorios..."
                 className="search-controls-input"
                 disabled={isLoading}
-                aria-label={`Buscar ${
-                  searchType === 'repository' ? 'repositorios' : 
-                  searchType === 'user' ? 'usuarios' : 
-                  'repositorios y usuarios'
-                }`}
+                aria-label="Buscar repositorios"
+              />
+
+              {/* Input de Usuario */}
+              <input
+                type="text"
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+                placeholder="Buscar usuarios..."
+                className="search-controls-input"
+                disabled={isLoading}
+                aria-label="Buscar usuarios"
               />
 
               {/* Botón de Búsqueda */}

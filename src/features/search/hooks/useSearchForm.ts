@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { type SearchFilters, type SearchType } from '../types/search';
+import { type SearchFilters } from '../types/search';
 
 // Definición de los filtros iniciales para resetear o comenzar
 const INITIAL_FILTERS: SearchFilters = {
@@ -21,14 +21,14 @@ const INITIAL_FILTERS: SearchFilters = {
  */
 export const useSearchForm = (
   onManualSearch: (
-    query: string, 
-    type: SearchType, 
+    repositoryQuery: string,
+    userQuery: string, 
     filters: SearchFilters
   ) => void,
   isLoading: boolean
 ) => {
-  const [searchInput, setSearchInput] = useState<string>('');
-  const [searchType, setSearchType] = useState<SearchType>('repository');
+  const [repositoryInput, setRepositoryInput] = useState<string>('');
+  const [userInput, setUserInput] = useState<string>('');
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [filters, setFilters] = useState<SearchFilters>(INITIAL_FILTERS);
 
@@ -54,7 +54,7 @@ export const useSearchForm = (
   /**
    * Maneja el envío del formulario, validando la entrada y llamando a la función
    * de búsqueda proporcionada por el componente padre (App.tsx).
-   * Permite búsquedas vacías (aleatorias) si no hay input pero sí filtros.
+   * Solo realiza búsqueda si hay al menos un input con contenido O filtros avanzados aplicados.
    */
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -62,30 +62,27 @@ export const useSearchForm = (
       
       if (isLoading) return;
       
-      const query = searchInput.trim();
+      const repositoryQuery = repositoryInput.trim();
+      const userQuery = userInput.trim();
       
-      // Si hay query, búsqueda normal
-      if (query) {
-        onManualSearch(query, searchType, filters);
+      // Verificar si hay filtros avanzados aplicados (excluyendo sort y order que siempre tienen valores)
+      const hasAdvancedFilters = filters.language || 
+                                (filters.stars !== null && filters.stars !== undefined) ||
+                                filters.organization ||
+                                filters.createdDate ||
+                                filters.pushedDate ||
+                                filters.topic ||
+                                filters.size;
+      
+      // Si no hay queries ni filtros avanzados, no hacer búsqueda
+      if (!repositoryQuery && !userQuery && !hasAdvancedFilters) {
         return;
       }
       
-      // Si no hay query pero hay filtros aplicados, hacer búsqueda con filtros
-      const hasFilters = Object.values(filters).some(value => 
-        value !== null && value !== 'relevance' && value !== 'desc'
-      );
-      
-      if (hasFilters) {
-        // Búsqueda con filtros pero sin query específico
-        onManualSearch('', searchType, filters);
-        return;
-      }
-      
-      // Si no hay query ni filtros, búsqueda aleatoria
-      // Llamar a la función de búsqueda aleatoria a través de un query vacío
-      onManualSearch('', searchType, filters);
+      // Realizar búsqueda con los queries proporcionados
+      onManualSearch(repositoryQuery, userQuery, filters);
     },
-    [searchInput, searchType, filters, onManualSearch, isLoading]
+    [repositoryInput, userInput, filters, onManualSearch, isLoading]
   );
   
   /**
@@ -97,14 +94,14 @@ export const useSearchForm = (
 
   return {
     // Estado
-    searchInput,
-    searchType,
+    repositoryInput,
+    userInput,
     showFilters,
     filters,
     
     // Acciones
-    setSearchInput,
-    setSearchType,
+    setRepositoryInput,
+    setUserInput,
     toggleFilters,
     updateFilter,
     handleSubmit,
