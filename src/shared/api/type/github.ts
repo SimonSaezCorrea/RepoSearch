@@ -11,6 +11,7 @@ export interface Repository {
   html_url: string;
   size: number;
   stargazers_count: number;
+  forks_count: number;
   language: string | null;
   owner: RepositoryOwner;
 }

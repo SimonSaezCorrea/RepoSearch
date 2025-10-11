@@ -1,4 +1,4 @@
-import { Github, Star } from 'lucide-react';
+import { GitFork, Github, HardDrive, Star } from 'lucide-react';
 import { useCallback } from 'react';
 
 import '../styles/Card.css';
@@ -15,6 +15,7 @@ const Card: React.FC<CardProps> = ({
   description,
   size,
   stars,
+  forks,
   language,
 }) => {
   // Usando useCallback para optimizar performance
@@ -65,7 +66,7 @@ const Card: React.FC<CardProps> = ({
           {/* Nombre de usuario */}
           <div className="card-language-badge">
             <div className="card-language">
-              <span className="card-language-text">
+              <span className="card-language-text card-username-truncated">
                 @{username}
               </span>
             </div>
@@ -99,10 +100,16 @@ const Card: React.FC<CardProps> = ({
         {/* Estadísticas adicionales */}
         <div className="card-meta">
           <div className="card-meta-left">
-            {size && (
+            {size !== undefined && (
               <span className="card-size-info">
-                <span>📦</span>
+                <HardDrive className="card-size-icon" />
                 <span>{formatRepoSize(size)}</span>
+              </span>
+            )}
+            {forks !== undefined && (
+              <span className="card-forks-info">
+                <GitFork className="card-fork-icon" />
+                <span>{forks.toLocaleString()}</span>
               </span>
             )}
           </div>

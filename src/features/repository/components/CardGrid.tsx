@@ -62,6 +62,7 @@ const CardGrid: React.FC<CardGridProps> = ({ repositories, previousCount }) => {
               description={repository.description || undefined}
               size={repository.size}
               stars={repository.stargazers_count}
+              forks={repository.forks_count}
               language={repository.language || undefined}
             />
           </div>

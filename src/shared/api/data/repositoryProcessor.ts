@@ -11,6 +11,7 @@ export const processRepository = (item: Repository): Repository => ({
   html_url: item.html_url,
   size: item.size,
   stargazers_count: item.stargazers_count,
+  forks_count: item.forks_count || 0,
   language: item.language || DATA.DEFAULT_LANGUAGE,
   owner: {
     login: item.owner.login,

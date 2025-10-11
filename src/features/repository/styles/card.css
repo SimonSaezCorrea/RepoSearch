@@ -60,6 +60,7 @@
   display: flex;
   align-items: center;
   width: 100%;
+  gap: var(--spacing-md);
 }
 
 /* Avatar del Usuario */
@@ -86,14 +87,16 @@
 
 /* Badge de Usuario/Lenguaje */
 .card-language-badge {
-  margin-left: var(--spacing-md);
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0; /* Permite que se encoja */
+  overflow: hidden;
 }
 
 .card-language {
   background-color: var(--color-bg-tertiary);
   padding: var(--spacing-xs) var(--spacing-md);
   border-radius: var(--radius-full);
+  overflow: hidden;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -106,6 +109,27 @@
   font-size: 0.875rem;
   color: var(--color-text-secondary);
   font-weight: 500;
+}
+
+.card-username-truncated {
+  max-width: calc(100% - 80px); /* Deja espacio para las estrellas */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-shrink: 1;
+}
+
+/* Media queries para diferentes tamaños */
+@media (max-width: 320px) {
+  .card-username-truncated {
+    max-width: calc(100% - 60px);
+  }
+}
+
+@media (min-width: 640px) {
+  .card-username-truncated {
+    max-width: calc(100% - 90px);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -208,13 +232,39 @@
 .card-meta-left {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
 }
 
 .card-size-info {
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
+}
+
+.card-size-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--color-text-tertiary);
+}
+
+.card-forks-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.card-fork-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--color-text-tertiary);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-size-icon,
+  .card-fork-icon {
+    color: var(--color-text-tertiary-dark);
+  }
 }
 
 /* ==============================================

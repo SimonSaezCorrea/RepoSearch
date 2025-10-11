@@ -9,6 +9,7 @@ export interface CardProps {
   description?: string;
   size?: number;
   stars?: number;
+  forks?: number;
   language?: string;
 }
 
