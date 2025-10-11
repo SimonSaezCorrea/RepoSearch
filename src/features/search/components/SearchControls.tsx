@@ -1,14 +1,18 @@
 import React, { memo } from 'react';
 
 import {
-    ORDER_OPTIONS,
-    SORT_OPTIONS
+  ORDER_OPTIONS,
+  SORT_OPTIONS
 } from '../constants/Controls';
 import { useSearchForm } from '../hooks/useSearchForm';
 import '../styles/SearchControls.css';
 import { type SearchFilters } from '../types/search';
 
 import CustomSelect from './CustomSelect';
+
+import { ChevronDown, ChevronUp, Search } from 'lucide-react';
+
+import { LoadingSpinner } from '../../../shared';
 
 // Re-exportar SearchFilters desde el archivo de tipos central
 export type { SearchFilters };
@@ -92,7 +96,7 @@ const SearchControls: React.FC<SearchControlsProps> = ({
                 className="search-controls-button"
                 aria-disabled={isLoading}
               >
-                {isLoading ? '🔄' : '🔍'} Buscar
+                {isLoading ? (<LoadingSpinner message='' size='sm'/>) : (<Search />)} Buscar
               </button>
             </form>
           </div>
@@ -107,7 +111,7 @@ const SearchControls: React.FC<SearchControlsProps> = ({
             aria-controls="advanced-filters-content"
           >
             <span className="search-controls-filters-title">
-              Filtros Avanzados {showFilters ? '🔽' : '▶️'}
+              Filtros Avanzados {showFilters ? (<ChevronUp />) : (<ChevronDown />)}
             </span>
           </button>
 
@@ -240,9 +244,7 @@ const SearchControls: React.FC<SearchControlsProps> = ({
             <div className="search-controls-info-content">
               <div className="search-controls-info-details">
                 <p className="search-controls-info-text">
-                  🔍 <span className="search-controls-info-query">"{currentQuery}"</span> •
-                  <span className="search-controls-info-type">🏷️ {queryType}</span> •
-                  <span className="search-controls-info-count">📦 {repositoryCount} repositorios</span>
+                  <span className="search-controls-info-query">🔍 Query: "{currentQuery}"</span>
                 </p>
               </div>
             </div>

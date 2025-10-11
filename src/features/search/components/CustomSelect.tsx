@@ -115,7 +115,10 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
       '&:hover': {
         borderColor: state.isFocused 
           ? 'var(--color-primary)' 
-          : 'var(--color-border-secondary)'
+          : 'var(--color-border-secondary)',
+        backgroundColor: state.hasValue 
+          ? 'var(--color-bg-secondary)'
+          : 'var(--color-bg-primary)'
       }
     }),
     
@@ -169,7 +172,10 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     singleValue: (provided) => ({
       ...provided,
       color: 'var(--color-text-primary)',
-      fontSize: '0.875rem'
+      fontSize: '0.875rem',
+      fontWeight: '500',
+      display: 'flex',
+      alignItems: 'center'
     }),
     
     multiValue: (provided) => ({

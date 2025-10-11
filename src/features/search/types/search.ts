@@ -1,3 +1,5 @@
+import { type ReactNode } from "react";
+
 import { type Repository } from "../../../shared/api/type/github";
 
 /**
@@ -49,7 +51,7 @@ export interface SidebarProps {
 export interface SelectOption {
   value: string;
   label: string;
-  icon?: string;
+  icon?: ReactNode;
 }
 
 /**

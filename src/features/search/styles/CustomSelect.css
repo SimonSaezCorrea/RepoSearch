@@ -33,11 +33,31 @@
   font-size: 1rem;
   width: 20px;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .custom-select-label {
   font-size: 0.875rem;
   line-height: 1.4;
+  font-weight: 500;
+}
+
+/* Mejorar visibilidad del valor seleccionado */
+.custom-select__single-value {
+  color: var(--color-text-primary) !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--spacing-sm) !important;
+}
+
+/* Asegurar que el control tenga buen contraste cuando hay valor */
+.custom-select__control--has-value {
+  background-color: var(--color-bg-secondary) !important;
+}
+
+.custom-select__control--has-value:hover {
+  background-color: var(--color-bg-tertiary) !important;
 }
 
 /* Animaciones para el dropdown */
@@ -69,7 +89,48 @@
 }
 
 /* Override para focus states en modo oscuro si se implementa */
-/* Placeholder para futuros estilos de modo oscuro */
+/* Estilos para modo oscuro */
+@media (prefers-color-scheme: dark) {
+  .custom-select__control {
+    background-color: var(--color-bg-primary-dark) !important;
+    border-color: var(--color-border-primary-dark) !important;
+    color: var(--color-text-primary-dark) !important;
+  }
+  
+  .custom-select__control--has-value {
+    background-color: var(--color-bg-secondary-dark) !important;
+  }
+  
+  .custom-select__control--has-value:hover {
+    background-color: var(--color-bg-tertiary-dark) !important;
+  }
+  
+  .custom-select__single-value {
+    color: var(--color-text-primary-dark) !important;
+  }
+  
+  .custom-select__menu {
+    background-color: var(--color-bg-primary-dark) !important;
+    border-color: var(--color-border-primary-dark) !important;
+  }
+  
+  .custom-select__option {
+    color: var(--color-text-primary-dark) !important;
+  }
+  
+  .custom-select__option--is-selected {
+    background-color: var(--color-primary) !important;
+    color: white !important;
+  }
+  
+  .custom-select__option--is-focused {
+    background-color: var(--color-bg-secondary-dark) !important;
+  }
+  
+  .custom-select__placeholder {
+    color: var(--color-text-tertiary-dark) !important;
+  }
+}
 
 /* Estados específicos del select */
 .custom-select__control--is-focused {
