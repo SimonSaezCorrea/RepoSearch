@@ -5,13 +5,13 @@
 :root {
   /* Colores Base */
   --color-primary-blue: #3b82f6;
-  --color-secondary-purple: #8b5cf6;
+  --color-github-green: #238636;
+  --color-github-green-hover: #2ea043;
   --color-accent-teal: #06b6d4;
-  --color-accent-green: #10b981;
+  --color-accent-orange: #fb923c;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
   --color-success: #22c55e;
-  --color-info: #3b82f6;
   --color-yellow: #fbbf24;
   
   /* Fondos */

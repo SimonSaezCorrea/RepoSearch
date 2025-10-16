@@ -16,8 +16,8 @@
   width: 350px;
   min-width: 350px;
   background: linear-gradient(135deg, 
-    var(--color-primary) 0%, 
-    var(--color-primary-dark) 100%);
+    var(--color-primary-blue) 0%, 
+    var(--color-bg-primary-dark) 100%);
   border-right: 1px solid var(--color-border-primary);
   display: flex;
   flex-direction: column;

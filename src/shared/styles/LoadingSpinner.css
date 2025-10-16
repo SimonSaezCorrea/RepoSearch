@@ -75,7 +75,7 @@
 }
 
 .loading-spinner--secondary {
-  border-bottom-color: var(--color-secondary-purple);
+  border-bottom-color: var(--color-accent-teal);
 }
 
 .loading-spinner--success {

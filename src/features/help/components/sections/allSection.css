@@ -1,3 +1,6 @@
+/* Importar variables */
+@import '../../../../shared/styles/shared/variables.css';
+
 /* ==============================================
    CONTENT STYLES - Estilos para el contenido
    ============================================== */
@@ -84,7 +87,7 @@
   align-items: center;
   gap: var(--spacing-sm);
   margin-bottom: var(--spacing-sm);
-  color: #8b5cf6;
+  color: var(--color-accent-teal);
 }
 
 .help-filter-icon {
@@ -211,7 +214,7 @@
 }
 
 .help-api-step-number {
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, var(--color-primary-blue), var(--color-accent-teal));
   color: white;
   width: 32px;
   height: 32px;
@@ -280,12 +283,12 @@
 }
 
 .help-spec-rule {
-  background: rgba(139, 92, 246, 0.1);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.2);
   border-radius: var(--radius-sm);
   padding: var(--spacing-sm);
   margin-bottom: var(--spacing-sm);
-  color: #8b5cf6;
+  color: var(--color-accent-teal);
 }
 
 .help-spec-examples {
@@ -338,14 +341,14 @@
 
 .help-step {
   background: rgba(255, 255, 255, 0.05);
-  border-left: 3px solid #8b5cf6;
+  border-left: 3px solid var(--color-accent-teal);
   padding: var(--spacing-sm);
   margin-bottom: var(--spacing-sm);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 
 .help-step strong {
-  color: #8b5cf6;
+  color: var(--color-accent-teal);
 }
 
 .help-step code {

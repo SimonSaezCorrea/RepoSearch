@@ -1,3 +1,6 @@
+/* Importar variables */
+@import '../../../shared/styles/shared/variables.css';
+
 /* ==============================================
    HELP MODAL - Modal de Ayuda con Paginación
    ============================================== */
@@ -75,7 +78,7 @@
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, var(--color-primary-blue), var(--color-accent-teal));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -84,7 +87,7 @@
 .help-modal-icon {
   width: 24px;
   height: 24px;
-  color: #3b82f6;
+  color: var(--color-primary-blue);
 }
 
 .help-modal-close {

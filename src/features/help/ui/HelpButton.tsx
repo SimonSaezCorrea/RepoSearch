@@ -2,7 +2,7 @@ import { HelpCircle } from 'lucide-react';
 import React, { useState } from 'react';
 
 import HelpModal from '../components/HelpModal';
-import '../styles/HelpModal.css';
+import '../styles/HelpButton.css';
 
 const HelpButton: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

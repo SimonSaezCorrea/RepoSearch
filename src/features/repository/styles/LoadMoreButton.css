@@ -36,12 +36,12 @@
 }
 
 .load-more-button--active {
-  background: linear-gradient(to right, var(--color-accent-green), var(--color-primary-blue));
+  background: linear-gradient(to right, var(--color-github-green), var(--color-github-green-hover));
   color: var(--color-text-inverse);
 }
 
 .load-more-button--active:hover {
-  background: linear-gradient(to right, var(--color-accent-green), var(--color-primary-blue));
+  background: linear-gradient(to right, var(--color-github-green-hover), var(--color-github-green));
   opacity: 0.9;
   box-shadow: var(--shadow-xl);
 }
@@ -68,7 +68,7 @@
 
 /* Variantes de color */
 .load-more-button--primary {
-  background: linear-gradient(135deg, var(--color-primary-blue), var(--color-secondary-purple));
+  background: linear-gradient(135deg, var(--color-github-green), var(--color-github-green-hover));
   color: var(--color-text-inverse);
 }
 

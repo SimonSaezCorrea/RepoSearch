@@ -5,6 +5,7 @@
   padding: var(--spacing-lg);
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  scroll-behavior: smooth;
 }
 
 .help-modal-content::-webkit-scrollbar {
