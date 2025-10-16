@@ -21,16 +21,16 @@ export const ContentHelper = ({ currentContent }: ContentHelperProps) => {
   }, [currentContent]);
 
   return (
-    <div className="help-modal-content" ref={contentRef}>
-              <div className="help-modal-section">
-                <h3 className="help-modal-section-title">
-                  <currentContent.icon className="help-modal-section-icon" />
-                  {currentContent.title}
-                </h3>
-                <div className="help-modal-section-body">
-                  {currentContent.content}
-                </div>
-              </div>
-            </div>
+    <article className="help-modal-content" ref={contentRef} role="region" aria-live="polite">
+      <section className="help-modal-section">
+        <header className="help-modal-section-title">
+          <currentContent.icon className="help-modal-section-icon" aria-hidden="true" />
+          <h3>{currentContent.title}</h3>
+        </header>
+        <article className="help-modal-section-body">
+          {currentContent.content}
+        </article>
+      </section>
+    </article>
   );
 }

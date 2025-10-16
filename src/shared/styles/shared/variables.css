@@ -118,3 +118,20 @@
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1536px;
 }
+
+/* ==============================================
+   UTILIDADES DE ACCESIBILIDAD
+   ============================================== */
+
+/* Screen Reader Only - Oculta visualmente pero mantiene para lectores de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

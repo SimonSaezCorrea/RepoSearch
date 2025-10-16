@@ -38,7 +38,6 @@ const SearchControls: React.FC<SearchControlsProps> = ({
   repositoryCount = 0 
 }) => {
   // Evitar warning de variable no usada
-  console.debug('SearchControls props:', { currentQuery, queryType, repositoryCount });
   
   const {
     repositoryInput,

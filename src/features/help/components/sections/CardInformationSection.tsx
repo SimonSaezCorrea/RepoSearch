@@ -3,88 +3,99 @@ import "./allSection.css";
 
 export const CardInformationSection = () => {
   return (
-    <div className="help-content">
+    <article className="help-content">
         <h4>📋 Estructura de las Cards</h4>
         
-        <div className="help-card-demo">
+        <figure className="help-card-demo">
           <div className="help-card-preview">
             <div className="help-card-section">
               <div className="help-card-header">
                 <div className="help-card-user">
-                  <User className="help-card-user-icon" />
+                  <User className="help-card-user-icon" aria-hidden="true" />
                   <span>@usuario</span>
                 </div>
                 <div className="help-card-stars">
-                  <Star className="help-card-star-icon" />
+                  <Star className="help-card-star-icon" aria-hidden="true" />
                   <span>1,234</span>
                 </div>
               </div>
             </div>
           </div>
-          <p><strong>Header:</strong> Información del usuario/organización y estrellas del repositorio</p>
-        </div>
+          <figcaption><strong>Header:</strong> Información del usuario/organización y estrellas del repositorio</figcaption>
+        </figure>
 
-        <div className="help-subsection">
-          <h5>🏷️ Título del Repositorio</h5>
+        <section className="help-subsection" aria-labelledby="repo-title-heading">
+          <h5 id="repo-title-heading">🏷️ Título del Repositorio</h5>
           <p>Nombre completo del repositorio, formateado para mejor legibilidad.</p>
-          <div className="help-example">
-            <strong>Formato:</strong> <code>nombre-repositorio</code>
+          <figure className="help-example">
+            <figcaption><strong>Formato:</strong></figcaption>
+            <code>nombre-repositorio</code>
             <br />
             <strong>Ejemplo:</strong> <code>RepoSearch</code>
-          </div>
-        </div>
+          </figure>
+        </section>
 
-        <div className="help-subsection">
-          <h5>📝 Descripción</h5>
+        <section className="help-subsection" aria-labelledby="description-heading">
+          <h5 id="description-heading">📝 Descripción</h5>
           <p>Descripción proporcionada por el autor del repositorio. Si no hay descripción, se muestra "Sin descripción disponible".</p>
-        </div>
+        </section>
 
-        <div className="help-subsection">
-          <h5>📊 Estadísticas Adicionales</h5>
-          <div className="help-stats">
+        <section className="help-subsection" aria-labelledby="stats-heading">
+          <h5 id="stats-heading">📊 Estadísticas Adicionales</h5>
+          <dl className="help-stats">
             <div className="help-stat">
-              <HardDrive className="help-stat-icon" />
+              <HardDrive className="help-stat-icon" aria-hidden="true" />
               <div>
-                <strong>Tamaño:</strong>
-                <p>Tamaño del repositorio en KB/MB/GB</p>
-                <span className="help-note">Se muestra incluso si es 0 KB</span>
+                <dt><strong>Tamaño:</strong></dt>
+                <dd>
+                  <p>Tamaño del repositorio en KB/MB/GB</p>
+                  <span className="help-note">Se muestra incluso si es 0 KB</span>
+                </dd>
               </div>
             </div>
             
             <div className="help-stat">
-              <GitFork className="help-stat-icon" />
+              <GitFork className="help-stat-icon" aria-hidden="true" />
               <div>
-                <strong>Forks:</strong>
-                <p>Número de veces que se ha bifurcado el proyecto</p>
-                <span className="help-note">Indica la popularidad y uso del código</span>
+                <dt><strong>Forks:</strong></dt>
+                <dd>
+                  <p>Número de veces que se ha bifurcado el proyecto</p>
+                  <span className="help-note">Indica la popularidad y uso del código</span>
+                </dd>
               </div>
             </div>
-          </div>
-        </div>
+          </dl>
+        </section>
 
-        <div className="help-subsection">
-          <h5>🏷️ Footer</h5>
-          <div className="help-footer-demo">
+        <section className="help-subsection" aria-labelledby="footer-heading">
+          <h5 id="footer-heading">🏷️ Footer</h5>
+          <dl className="help-footer-demo">
             <div className="help-footer-item">
-              <Code2 className="help-footer-icon" />
-              <span><strong>Lenguaje:</strong> Lenguaje principal del repositorio</span>
+              <Code2 className="help-footer-icon" aria-hidden="true" />
+              <div>
+                <dt><strong>Lenguaje:</strong></dt>
+                <dd>Lenguaje principal del repositorio</dd>
+              </div>
             </div>
             <div className="help-footer-item">
-              <Github className="help-footer-icon" />
-              <span><strong>Enlace:</strong> Clic para abrir en GitHub</span>
+              <Github className="help-footer-icon" aria-hidden="true" />
+              <div>
+                <dt><strong>Enlace:</strong></dt>
+                <dd>Clic para abrir en GitHub</dd>
+              </div>
             </div>
-          </div>
-        </div>
+          </dl>
+        </section>
 
-        <div className="help-subsection">
-          <h5>🎨 Estados Visuales</h5>
+        <section className="help-subsection" aria-labelledby="visual-states-heading">
+          <h5 id="visual-states-heading">🎨 Estados Visuales</h5>
           <ul className='help-list'>
             <li><strong>Hover:</strong> La card se eleva y cambia ligeramente</li>
             <li><strong>Truncamiento:</strong> Nombres de usuario largos se acortan automáticamente</li>
             <li><strong>Números:</strong> Se formatean con separadores de miles (1,234)</li>
             <li><strong>Tamaños:</strong> Se convierten automáticamente (1024 KB → 1 MB)</li>
           </ul>
-        </div>
-      </div>
+        </section>
+      </article>
   );
 };
