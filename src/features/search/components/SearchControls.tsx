@@ -1,5 +1,7 @@
+import { ChevronDown, ChevronUp, Search } from 'lucide-react';
 import React, { memo } from 'react';
 
+import { LoadingSpinner } from '../../../shared';
 import {
   ORDER_OPTIONS,
   SORT_OPTIONS
@@ -10,9 +12,8 @@ import { type SearchFilters } from '../types/search';
 
 import CustomSelect from './CustomSelect';
 
-import { ChevronDown, ChevronUp, Search } from 'lucide-react';
 
-import { LoadingSpinner } from '../../../shared';
+
 
 // Re-exportar SearchFilters desde el archivo de tipos central
 export type { SearchFilters };
@@ -36,6 +37,8 @@ const SearchControls: React.FC<SearchControlsProps> = ({
   queryType = '', 
   repositoryCount = 0 
 }) => {
+  // Evitar warning de variable no usada
+  console.debug('SearchControls props:', { currentQuery, queryType, repositoryCount });
   
   const {
     repositoryInput,

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import './App.css';
+import { HelpButton } from './features/help';
 import { ScrollableCardArea } from './features/repository';
 import { Sidebar } from './features/search';
 import { ErrorMessage, LoadingSpinner, useRepositoryData } from './shared';
@@ -15,7 +16,6 @@ function App() {
     previousCount,
     currentQuery,
     queryType,
-    retryCount,
     isRateLimited,
     rateLimitReset,
     loadInitialData,
@@ -105,19 +105,10 @@ function App() {
             />
           )}
         </div>
-        
-        {/* Debug Panel - Temporal */}
-        {import.meta.env.DEV && (
-          <div className="alert alert-info">
-            <div className="alert-container">
-              <div className="alert-message alert-message--info">
-                🐛 Debug: {repositories.length} repos • {isLoading ? 'Loading...' : 'Idle'} • 
-                Query: "{currentQuery}" • Type: {queryType} • Retries: {retryCount}
-              </div>
-            </div>
-          </div>
-        )}
       </div>
+      
+      {/* Help Button */}
+      <HelpButton />
     </div>
   );
 }
