@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
 import './App.css';
-import { HelpButton } from './features/help';
 import { ScrollableCardArea } from './features/repository';
 import { Sidebar } from './features/search';
 import { ErrorMessage, LoadingSpinner, useRepositoryData } from './shared';
@@ -106,9 +105,6 @@ function App() {
           )}
         </div>
       </div>
-      
-      {/* Help Button */}
-      <HelpButton />
     </div>
   );
 }
