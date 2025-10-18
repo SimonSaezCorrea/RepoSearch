@@ -32,45 +32,41 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
   const currentContent = helpSections[currentSection];
 
   return (
-    <div className="help-modal-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
+    <div className="help-modal-overlay" onClick={onClose}>
       <div className="help-modal-container" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
-        <header className="help-modal-header">
+        <div className="help-modal-header">
           <div className="help-modal-title">
-            <HelpCircle className="help-modal-icon" aria-hidden="true" />
-            <h2 id="help-modal-title">Guía de Uso - RepoSearch</h2>
+            <HelpCircle className="help-modal-icon" />
+            <h2>Guía de Uso - RepoSearch</h2>
           </div>
           <button 
             className="help-modal-close"
             onClick={onClose}
             aria-label="Cerrar ayuda"
           >
-            <X aria-hidden="true" />
+            <X />
           </button>
-        </header>
+        </div>
 
         {/* Navigation Tabs */}
-        <nav aria-label="Navegación de secciones de ayuda">
-          <NavegationTabs
-            helpSections={helpSections}
-            currentSection={currentSection}
-            goToSection={goToSection}
-          />
-        </nav>
+        <NavegationTabs
+          helpSections={helpSections}
+          currentSection={currentSection}
+          goToSection={goToSection}
+        />
 
         {/* Content */}
         <ContentHelper currentContent={currentContent} />
 
         {/* Footer Navigation */}
-        <footer className="help-modal-footer">
-          <FooterNavegtion
-            currentSection={currentSection}
-            helpSections={helpSections}
-            handlePrevious={handlePrevious}
-            handleNext={handleNext}
-            goToSection={goToSection}
-          />
-        </footer>
+        <FooterNavegtion
+          currentSection={currentSection}
+          helpSections={helpSections}
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          goToSection={goToSection}
+        />
       </div>
     </div>
   );

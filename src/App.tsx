@@ -35,7 +35,7 @@ function App() {
   return (
     <div className="app-container">
       {/* Sidebar con título y controles de búsqueda */}
-      <aside className="app-sidebar" aria-label="Panel de búsqueda">
+      <div className="app-sidebar">
         <Sidebar
           onManualSearch={searchManual}
           onRandomSearch={generateNewSearch}
@@ -44,18 +44,18 @@ function App() {
           queryType={queryType}
           repositoryCount={repositories.length}
         />
-      </aside>
+      </div>
 
       {/* Área principal de contenido */}
-      <main className="app-main-content">
+      <div className="app-main-content">
         {/* Alertas */}
-        {(isRateLimited || error) && (<section className="app-alerts" aria-live="polite" aria-atomic="true">
+        {(isRateLimited || error) && (<div className="app-alerts">
           {/* Alerta de Rate Limiting */}
           {isRateLimited && (
-            <div className="alert alert-warning" role="alert">
+            <div className="alert alert-warning">
               <div className="alert-container">
                 <div className="alert-content">
-                  <div className="alert-icon" aria-hidden="true">
+                  <div className="alert-icon">
                     <span className="alert-icon-emoji">⚠️</span>
                   </div>
                   <div className="alert-text">
@@ -65,7 +65,7 @@ function App() {
                     <p className="alert-message alert-message--warning">
                       Has alcanzado el límite de peticiones de GitHub API. 
                       {rateLimitReset && (
-                        <span> Se reinicia: <time dateTime={rateLimitReset.toISOString()}>{rateLimitReset.toLocaleString()}</time></span>
+                        <span> Se reinicia: {rateLimitReset.toLocaleString()}</span>
                       )}
                     </p>
                   </div>
@@ -76,7 +76,7 @@ function App() {
 
           {/* Error Message */}
           {error && (
-            <div className="alert alert-error" role="alert">
+            <div className="alert alert-error">
               <div className="alert-container">
                 <ErrorMessage 
                   message={error} 
@@ -85,10 +85,10 @@ function App() {
               </div>
             </div>
           )}
-        </section>)}
+        </div>)}
 
         {/* Área principal con scroll */}
-        <section className="app-content-area" aria-label="Repositorios encontrados">
+        <div className="app-content-area">
           {isInitialLoading ? (
             <div className="flex-1 flex items-center justify-center">
               <LoadingSpinner />
@@ -104,8 +104,8 @@ function App() {
               error={error}
             />
           )}
-        </section>
-      </main>
+        </div>
+      </div>
       
       {/* Help Button */}
       <HelpButton />

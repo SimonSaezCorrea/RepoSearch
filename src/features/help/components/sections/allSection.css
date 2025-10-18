@@ -42,8 +42,7 @@
   margin-top: var(--spacing-sm);
 }
 
-.help-example strong,
-.help-example figcaption strong {
+.help-example strong {
   color: #3b82f6;
   display: block;
   margin-bottom: var(--spacing-xs);
@@ -91,20 +90,13 @@
   color: var(--color-accent-teal);
 }
 
-.help-filter-title h5 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
 .help-filter-icon {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
 }
 
-.help-filter ul,
-.help-filter dl {
+.help-filter ul {
   margin: 0;
   padding-left: var(--spacing-lg);
 }
@@ -112,26 +104,6 @@
 .help-filter li {
   margin-bottom: var(--spacing-xs);
   color: rgba(255, 255, 255, 0.8);
-}
-
-.help-filter dl {
-  padding-left: 0;
-}
-
-.help-filter dl > div {
-  margin-bottom: var(--spacing-xs);
-}
-
-.help-filter dt {
-  display: inline;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.help-filter dd {
-  display: inline;
-  margin: 0;
-  padding-left: var(--spacing-xs);
-  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Card Demo Styles */
@@ -206,18 +178,6 @@
   margin-top: 2px;
 }
 
-.help-stat dt {
-  display: block;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: var(--spacing-xs);
-}
-
-.help-stat dd {
-  margin: 0;
-  padding: 0;
-  color: rgba(255, 255, 255, 0.8);
-}
-
 /* Footer Demo */
 .help-footer-demo {
   background: rgba(255, 255, 255, 0.03);
@@ -234,23 +194,6 @@
   font-size: 0.875rem;
 }
 
-.help-footer-item > div {
-  display: flex;
-  align-items: baseline;
-  gap: var(--spacing-xs);
-}
-
-.help-footer-item dt {
-  display: inline;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.help-footer-item dd {
-  display: inline;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.7);
-}
-
 .help-footer-icon {
   width: 16px;
   height: 16px;
@@ -261,9 +204,6 @@
 /* API Flow */
 .help-api-flow {
   margin: var(--spacing-lg) 0;
-  list-style: none;
-  counter-reset: none;
-  padding: 0;
 }
 
 .help-api-step {
@@ -310,18 +250,12 @@
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 
-.help-query-example figcaption {
-  margin-bottom: var(--spacing-xs);
-}
-
 .help-query-example code {
   background: rgba(16, 185, 129, 0.2);
   color: #10b981;
   padding: 2px 6px;
   border-radius: 4px;
   font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
-  display: inline-block;
-  margin-top: var(--spacing-xs);
 }
 
 /* Limitations */
@@ -337,15 +271,10 @@
   margin-bottom: var(--spacing-sm);
 }
 
-.help-limitation dt {
+.help-limitation strong {
   color: #f59e0b;
   display: block;
   margin-bottom: var(--spacing-xs);
-}
-
-.help-limitation dd {
-  margin: 0;
-  padding-left: 0;
 }
 
 /* Specifications */
@@ -378,8 +307,7 @@
   border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
-.help-spec-good strong,
-.help-spec-good figcaption strong {
+.help-spec-good strong {
   color: #10b981;
 }
 
@@ -388,15 +316,8 @@
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-.help-spec-bad strong,
-.help-spec-bad figcaption strong {
+.help-spec-bad strong {
   color: #ef4444;
-}
-
-.help-spec-good figcaption,
-.help-spec-bad figcaption {
-  display: block;
-  margin-bottom: var(--spacing-xs);
 }
 
 /* Use Cases */
@@ -416,9 +337,6 @@
 
 .help-use-case-steps {
   margin: var(--spacing-md) 0;
-  list-style: none;
-  counter-reset: none;
-  padding: 0;
 }
 
 .help-step {

@@ -34,9 +34,8 @@ const Card: React.FC<CardProps> = ({
   return (
     <article
       className="card"
-      role="article"
+      role="button"
       tabIndex={0}
-      aria-label={`Repositorio ${title} de ${username}`}
       style={{
         // Dimensiones más predecibles para evitar saltos en masonry
         minHeight: '200px',
@@ -44,13 +43,12 @@ const Card: React.FC<CardProps> = ({
       }}
     >
       {/* Header con avatar, nombre y estrellas */}
-      <header className="card-header">
+      <div className="card-header">
         <div className="card-user-info">
           {/* Avatar */}
-          <button 
+          <div 
             className="card-avatar-container" 
             onClick={handleUserClick}
-            aria-label={`Ver perfil de ${username}`}
           >
             <img
               src={avatar_url}
@@ -63,7 +61,7 @@ const Card: React.FC<CardProps> = ({
                 transition: 'opacity 0.3s ease-in-out'
               }}
             />
-          </button>
+          </div>
           
           {/* Nombre de usuario */}
           <div className="card-language-badge">
@@ -78,17 +76,17 @@ const Card: React.FC<CardProps> = ({
           <div className="card-spacer"></div>
           
           {/* Estrellas en el extremo derecho */}
-          <div className="card-stars" aria-label={`${stars} estrellas`}>
-            <Star className="card-star-icon" aria-hidden="true" />
+          <div className="card-stars">
+            <Star className="card-star-icon" />
             <span className="card-star-count">
               {stars?.toLocaleString() || '0'}
             </span>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* Contenido principal */}
-      <section className="card-content">
+      <div className="card-content">
         <h2 className="card-title">
           {formatProjectName(title)}
         </h2>
@@ -100,47 +98,40 @@ const Card: React.FC<CardProps> = ({
         )}
 
         {/* Estadísticas adicionales */}
-        <dl className="card-meta">
+        <div className="card-meta">
           <div className="card-meta-left">
             {size !== undefined && (
-              <div className="card-size-info">
-                <dt className="sr-only">Tamaño</dt>
-                <dd>
-                  <HardDrive className="card-size-icon" aria-hidden="true" />
-                  <span>{formatRepoSize(size)}</span>
-                </dd>
-              </div>
+              <span className="card-size-info">
+                <HardDrive className="card-size-icon" />
+                <span>{formatRepoSize(size)}</span>
+              </span>
             )}
             {forks !== undefined && (
-              <div className="card-forks-info">
-                <dt className="sr-only">Forks</dt>
-                <dd>
-                  <GitFork className="card-fork-icon" aria-hidden="true" />
-                  <span>{forks.toLocaleString()}</span>
-                </dd>
-              </div>
+              <span className="card-forks-info">
+                <GitFork className="card-fork-icon" />
+                <span>{forks.toLocaleString()}</span>
+              </span>
             )}
           </div>
-        </dl>
-      </section>
+        </div>
+      </div>
 
       {/* Footer con lenguaje y enlace */}
-      <footer className="card-footer">
+      <div className="card-footer">
         <div className="card-footer-left">
           {language && (
-            <span className="card-tech-badge" aria-label={`Lenguaje: ${language}`}>
+            <div className="card-tech-badge">
               {language}
-            </span>
+            </div>
           )}
         </div>
-        <button 
+        <div 
           className="card-github-link"
           onClick={handleProjectClick}
-          aria-label={`Abrir ${title} en GitHub`}
         >
-          <Github className="card-github-icon" aria-hidden="true" />
-        </button>
-      </footer>
+          <Github className="card-github-icon" />
+        </div>
+      </div>
     </article>
   );
 };

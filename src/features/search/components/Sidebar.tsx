@@ -16,14 +16,14 @@ const Sidebar: React.FC<SidebarProps> = ({
   repositoryCount = 0
 }) => {
   return (
-    <div className="sidebar">
+    <aside className="sidebar">
       {/* Encabezado del sidebar */}
-      <header className="sidebar-header">
+      <div className="sidebar-header">
         <HeaderSearch onRandomSearch={onRandomSearch} />
-      </header>
+      </div>
       
       {/* Controles de búsqueda */}
-      <section className="sidebar-content" aria-label="Controles de búsqueda">
+      <div className="sidebar-content">
         <SearchControls
           onManualSearch={onManualSearch}
           isLoading={isLoading}
@@ -31,8 +31,8 @@ const Sidebar: React.FC<SidebarProps> = ({
           queryType={queryType}
           repositoryCount={repositoryCount}
         />
-      </section>
-    </div>
+      </div>
+    </aside>
   );
 };
 
