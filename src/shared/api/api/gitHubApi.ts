@@ -8,13 +8,24 @@ export const fetchFromGitHubApi = async (url: string): Promise<GitHubApiResponse
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), API.TIMEOUT_MS);
 
+  // Obtener token desde variables de entorno
+  const token = import.meta.env.VITE_GITHUB_TOKEN;
+
+  // Construir headers base
+  const headers: HeadersInit = {
+    'Accept': 'application/vnd.github.v3+json',
+    'User-Agent': 'RepoSearch-App',
+  };
+
+  // Agregar token si está disponible
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   try {
     const response = await fetch(url, {
       signal: controller.signal,
-      headers: {
-        'Accept': 'application/vnd.github.v3+json',
-        'User-Agent': 'RepoSearch-App',
-      },
+      headers,
     });
 
     clearTimeout(timeoutId);
