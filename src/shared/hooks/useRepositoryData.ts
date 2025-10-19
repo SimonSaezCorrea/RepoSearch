@@ -2,12 +2,12 @@ import { useCallback, useState } from 'react';
 
 import { type SearchFilters } from '../../features/search/types/search';
 import {
-    generateNewRandomQuery,
-    getPaginationState,
-    getRepositoryData,
-    loadMoreRepositories,
-    resetPagination,
-    searchRepositoriesManual,
+  generateNewRandomQuery,
+  getPaginationState,
+  getRepositoryData,
+  loadMoreRepositories,
+  resetPagination,
+  searchRepositoriesManual,
 } from '../api/gitService';
 import type { Repository } from '../api/type/github';
 import { MESSAGES } from '../constants/css_menssages';
@@ -28,6 +28,7 @@ interface UseRepositoryDataResult {
   loadMoreRepositories: () => Promise<void>;
   generateNewSearch: () => Promise<void>;
   searchManual: (
+    searchQuery: string,
     repositoryQuery: string,
     userQuery: string,
     filters: SearchFilters
@@ -283,6 +284,7 @@ export const useRepositoryData = (): UseRepositoryDataResult => {
    */
   const searchManual = useCallback(
     async (
+      searchQuery: string,
       repositoryQuery: string,
       userQuery: string,
       filters: SearchFilters
@@ -294,7 +296,7 @@ export const useRepositoryData = (): UseRepositoryDataResult => {
         setError(null);
         setRetryCount(0);
 
-        const result = await searchRepositoriesManual(repositoryQuery, userQuery, filters);
+        const result = await searchRepositoriesManual(searchQuery, repositoryQuery, userQuery, filters);
 
         if (result.items.length === 0) {
           setRepositories([]);

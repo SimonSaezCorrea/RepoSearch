@@ -17,16 +17,18 @@ const INITIAL_FILTERS: SearchFilters = {
 
 /**
  * Hook personalizado para gestionar el estado del formulario de búsqueda manual.
- * Incluye el input de texto, el tipo de búsqueda y los filtros avanzados.
+ * Incluye el input de texto genérico, el tipo de búsqueda y los filtros avanzados.
  */
 export const useSearchForm = (
   onManualSearch: (
+    searchQuery: string,
     repositoryQuery: string,
     userQuery: string, 
     filters: SearchFilters
   ) => void,
   isLoading: boolean
 ) => {
+  const [searchInput, setSearchInput] = useState<string>('');
   const [repositoryInput, setRepositoryInput] = useState<string>('');
   const [userInput, setUserInput] = useState<string>('');
   const [showFilters, setShowFilters] = useState<boolean>(false);
@@ -54,6 +56,7 @@ export const useSearchForm = (
   /**
    * Maneja el envío del formulario y llama a la función de búsqueda.
    * Con stars:>0 por defecto, siempre hay contenido válido en la query.
+   * Usa searchInput como búsqueda genérica y repositoryInput/userInput como filtros avanzados.
    */
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -61,14 +64,15 @@ export const useSearchForm = (
       
       if (isLoading) return;
       
+      const genericQuery = searchInput.trim();
       const repositoryQuery = repositoryInput.trim();
       const userQuery = userInput.trim();
       
-      // Realizar búsqueda con los queries y filtros proporcionados
+      // Realizar búsqueda con el query genérico y filtros proporcionados
       // Siempre se agregará stars:>0 si no se especifica otro valor
-      onManualSearch(repositoryQuery, userQuery, filters);
+      onManualSearch(genericQuery, repositoryQuery, userQuery, filters);
     },
-    [repositoryInput, userInput, filters, onManualSearch, isLoading]
+    [searchInput, repositoryInput, userInput, filters, onManualSearch, isLoading]
   );
   
   /**
@@ -80,12 +84,14 @@ export const useSearchForm = (
 
   return {
     // Estado
+    searchInput,
     repositoryInput,
     userInput,
     showFilters,
     filters,
     
     // Acciones
+    setSearchInput,
     setRepositoryInput,
     setUserInput,
     toggleFilters,

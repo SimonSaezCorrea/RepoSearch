@@ -46,6 +46,7 @@ export const getRepositoryData = async (): Promise<SearchResponse> => {
  * Función para búsqueda manual con filtros
  */
 export const searchRepositoriesManual = async (
+  searchQuery: string,
   repositoryQuery: string,
   userQuery: string,
   filters: SearchFilters
@@ -60,11 +61,15 @@ export const searchRepositoriesManual = async (
       setSortParams(filters.sort, filters.order);
     }
 
-    // Construir la query combinando repositorio y usuario
+    // Construir la query combinando búsqueda genérica, repositorio y usuario
     const queryParts = [];
 
+    // Agregar búsqueda genérica (términos generales)
+    if (searchQuery.trim()) {
+      queryParts.push(searchQuery.trim());
+    }
 
-    // Agregar parte de repositorio y usuario
+    // Agregar filtros específicos de repositorio y usuario
     if (repositoryQuery.trim()) {
       queryParts.push(`in:name ${repositoryQuery.trim()}`);
     }
@@ -72,7 +77,6 @@ export const searchRepositoriesManual = async (
     if (userQuery.trim()) {
       queryParts.push(`user:${userQuery.trim()}`);
     }
-
 
     let fullQuery = queryParts.length > 0 ? queryParts.join(' ') : '';
 
@@ -113,7 +117,12 @@ export const searchRepositoriesManual = async (
 
     // Determinar el tipo de query basado en los inputs
     let queryType = '';
-    if (repositoryQuery.trim() && userQuery.trim()) {
+    if (searchQuery.trim()) {
+      queryType = 'Búsqueda Genérica';
+      if (repositoryQuery.trim() || userQuery.trim()) {
+        queryType += ' + Filtros';
+      }
+    } else if (repositoryQuery.trim() && userQuery.trim()) {
       queryType = 'Repositorio y Usuario';
     } else if (repositoryQuery.trim()) {
       queryType = 'Por Repositorio';

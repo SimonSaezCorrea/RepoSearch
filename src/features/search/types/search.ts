@@ -37,7 +37,7 @@ export type SearchType = 'repository' | 'user' | 'both';
  * Props para el componente Sidebar.
  */
 export interface SidebarProps {
-  onManualSearch: (repositoryQuery: string, userQuery: string, filters: SearchFilters) => void;
+  onManualSearch: (searchQuery: string, repositoryQuery: string, userQuery: string, filters: SearchFilters) => void;
   onRandomSearch: () => void;
   isLoading?: boolean;
   currentQuery?: string;

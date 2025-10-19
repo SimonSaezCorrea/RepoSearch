@@ -84,10 +84,13 @@
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
 }
 
-.visually-hidden {
-  font-size: 0.95rem;
+.search-controls-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
   color: rgba(255, 255, 255, 0.8);
-  line-height: 1.4;
+  margin-bottom: calc(var(--spacing-xs) * 0.5);
+  line-height: 1.2;
 }
 
 .search-controls-input {

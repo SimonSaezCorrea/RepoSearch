@@ -19,7 +19,7 @@ import CustomSelect from './CustomSelect';
 export type { SearchFilters };
 
 interface SearchControlsProps {
-  onManualSearch: (repositoryQuery: string, userQuery: string, filters: SearchFilters) => void;
+  onManualSearch: (searchQuery: string, repositoryQuery: string, userQuery: string, filters: SearchFilters) => void;
   isLoading?: boolean;
   currentQuery?: string;
   queryType?: string;
@@ -38,10 +38,12 @@ const SearchControls: React.FC<SearchControlsProps> = ({
 }) => {
   
   const {
+    searchInput,
     repositoryInput,
     userInput,
     showFilters,
     filters,
+    setSearchInput,
     setRepositoryInput,
     setUserInput,
     toggleFilters,
@@ -67,28 +69,15 @@ const SearchControls: React.FC<SearchControlsProps> = ({
         <div className="search-controls-main">
           <div className="search-controls-input-group">
             <form onSubmit={handleSubmit} className="search-controls-input-container">
-              {/* Input de Repositorio */}
-              <label htmlFor="repository-search" className="visually-hidden">Buscar repositorios:</label>
+              {/* Buscador generico */}
+              <label htmlFor="repository-search" className="search-controls-label">Buscar:</label>
               <input
                 type="text"
-                value={repositoryInput}
-                onChange={(e) => setRepositoryInput(e.target.value)}
-                placeholder="Buscar repositorios..."
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                placeholder="Ingrese términos de búsqueda"
                 className="search-controls-input"
                 disabled={isLoading}
-                aria-label="Buscar repositorios"
-              />
-
-              {/* Input de Usuario */}
-              <label htmlFor="user-search" className="visually-hidden">Buscar usuarios:</label>
-              <input
-                type="text"
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                placeholder="Buscar usuarios..."
-                className="search-controls-input"
-                disabled={isLoading}
-                aria-label="Buscar usuarios"
               />
 
               {/* Botón de Búsqueda */}
@@ -148,6 +137,32 @@ const SearchControls: React.FC<SearchControlsProps> = ({
                     isCompact={true}
                     maxMenuHeight={80}
                     menuPlacement="bottom"
+                  />
+                </div>
+
+                {/* Input de Repositorio */}
+                <div className="search-controls-filter-field">
+                  <label className="search-controls-filter-label">Repositorio</label>
+                  <input
+                    type="text"
+                    value={repositoryInput}
+                     onChange={(e) => setRepositoryInput(e.target.value)}
+                    placeholder="Buscar repositorios..."
+                    className="search-controls-filter-input"
+                    disabled={isLoading}
+                  />
+                </div>
+
+                {/* Input de Usuario */}
+                <div className="search-controls-filter-field">
+                  <label className="search-controls-filter-label">Usuario</label>
+                  <input
+                    type="text"
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    className="search-controls-filter-input"
+                    placeholder="Buscar usuarios..."
+                    disabled={isLoading}
                   />
                 </div>
 
