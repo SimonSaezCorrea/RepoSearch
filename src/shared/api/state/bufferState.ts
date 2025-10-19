@@ -1,5 +1,5 @@
-import type { Repository } from '../api/gitHubApi';
 import { API } from '../constants/APIGitHub';
+import type { Repository } from "../type/github";
 
 // Estado global para manejo de paginación y buffering
 interface BufferState {

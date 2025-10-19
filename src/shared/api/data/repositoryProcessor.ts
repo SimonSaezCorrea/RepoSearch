@@ -1,5 +1,5 @@
-import type { Repository } from '../api/gitHubApi';
 import { DATA } from '../constants/APIGitHub';
+import type { Repository } from '../type/github';
 
 /**
  * Procesa un repositorio de la API para asegurar tipos y valores por defecto

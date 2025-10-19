@@ -1,22 +1,22 @@
-import type { Repository } from '../api/gitHubApi';
 import { buildApiUrl, fetchFromGitHubApi } from '../api/gitHubApi';
 import { API } from '../constants/APIGitHub';
 import { processRepository } from '../data/repositoryProcessor';
 import {
-    addToBuffer,
-    addToLoadedRepositories,
-    extractFromBuffer,
-    getCurrentQuery,
-    getHasMoreData,
-    getSortParams,
-    incrementApiPage,
-    incrementClientPage,
-    needsData,
-    resetBufferState,
-    setHasMoreApiData,
-    setPreloadingState,
-    shouldPreload,
+  addToBuffer,
+  addToLoadedRepositories,
+  extractFromBuffer,
+  getCurrentQuery,
+  getHasMoreData,
+  getSortParams,
+  incrementApiPage,
+  incrementClientPage,
+  needsData,
+  resetBufferState,
+  setHasMoreApiData,
+  setPreloadingState,
+  shouldPreload,
 } from '../state/bufferState';
+import type { Repository } from '../type/github';
 
 /**
  * Carga una página completa de 100 elementos desde la API

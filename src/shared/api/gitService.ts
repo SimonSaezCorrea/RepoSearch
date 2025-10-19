@@ -1,16 +1,16 @@
 import { type SearchFilters, type SearchResponse } from '../../features/search/types/search';
 
 import {
-    getItemsFromBuffer,
-    resetBuffering
+  getItemsFromBuffer,
+  resetBuffering
 } from './buffering/bufferingManager';
 import { generateRandomQuery, getQueryType } from './query/queryGenerator';
 import {
-    getAllLoadedRepositories as getBufferedRepositories,
-    getCurrentQuery,
-    getPaginationInfo,
-    setCurrentQuery,
-    setSortParams,
+  getAllLoadedRepositories as getBufferedRepositories,
+  getCurrentQuery,
+  getPaginationInfo,
+  setCurrentQuery,
+  setSortParams,
 } from './state/bufferState';
 import type { Repository } from './type/github';
 
@@ -60,58 +60,32 @@ export const searchRepositoriesManual = async (
       setSortParams(filters.sort, filters.order);
     }
 
-    // Construir query con filtros
-    let fullQuery = '';
-
-    // Verificar si hay filtros avanzados aplicados (excluyendo sort y order que siempre tienen valores)
-    const hasAdvancedFilters = filters.language || 
-                              (filters.stars !== null && filters.stars !== undefined) ||
-                              filters.organization ||
-                              filters.createdDate ||
-                              filters.pushedDate ||
-                              filters.topic ||
-                              filters.size;
-
     // Construir la query combinando repositorio y usuario
     const queryParts = [];
-    
+
+
+    // Agregar parte de repositorio y usuario
     if (repositoryQuery.trim()) {
-      queryParts.push(repositoryQuery.trim());
+      queryParts.push(`in:name ${repositoryQuery.trim()}`);
     }
     
     if (userQuery.trim()) {
       queryParts.push(`user:${userQuery.trim()}`);
     }
 
-    // Si no hay queries pero hay filtros avanzados, usar solo filtros
-    if (queryParts.length === 0 && hasAdvancedFilters) {
-      fullQuery = '';
-    }
-    // Si no hay queries ni filtros avanzados, no hacer búsqueda (no generar aleatoria)
-    else if (queryParts.length === 0 && !hasAdvancedFilters) {
-      // No hacer búsqueda - esto no debería llegar aquí por la validación en useSearchForm
-      // pero lo mantenemos como fallback
-      return {
-        items: [],
-        total_count: 0,
-        incomplete_results: false,
-        currentQuery: '',
-        queryType: 'Sin criterios',
-      };
-    }
-    // Si hay queries, combinarlos
-    else if (queryParts.length > 0) {
-      fullQuery = queryParts.join(' ');
-    }
+
+    let fullQuery = queryParts.length > 0 ? queryParts.join(' ') : '';
 
     // Agregar filtros a la query
     const filterParts = [];
-    
+
     if (filters.language) {
       filterParts.push(`language:${filters.language}`);
     }
-    if (filters.stars !== null && filters.stars !== undefined) {
+    if (filters.stars) {
       filterParts.push(`stars:>=${filters.stars}`);
+    } else {
+      filterParts.push(`stars:>=0`);
     }
     if (filters.organization) {
       filterParts.push(`org:${filters.organization}`);
@@ -130,11 +104,7 @@ export const searchRepositoriesManual = async (
     }
 
     // Combinar query base con filtros
-    if (fullQuery.trim() && filterParts.length > 0) {
-      fullQuery = `${fullQuery.trim()} ${filterParts.join(' ')}`;
-    } else if (filterParts.length > 0) {
-      fullQuery = filterParts.join(' ');
-    }
+    fullQuery = `${fullQuery.trim()} ${filterParts.join(' ')}`;
 
     setCurrentQuery(fullQuery);
 
@@ -149,10 +119,8 @@ export const searchRepositoriesManual = async (
       queryType = 'Por Repositorio';
     } else if (userQuery.trim()) {
       queryType = 'Por Usuario';
-    } else if (hasAdvancedFilters) {
-      queryType = 'Solo Filtros';
     } else {
-      queryType = 'Sin criterios';
+      queryType = 'Solo Filtros';
     }
 
     return {

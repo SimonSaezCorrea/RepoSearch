@@ -52,9 +52,8 @@ export const useSearchForm = (
   );
 
   /**
-   * Maneja el envío del formulario, validando la entrada y llamando a la función
-   * de búsqueda proporcionada por el componente padre (App.tsx).
-   * Solo realiza búsqueda si hay al menos un input con contenido O filtros avanzados aplicados.
+   * Maneja el envío del formulario y llama a la función de búsqueda.
+   * Con stars:>0 por defecto, siempre hay contenido válido en la query.
    */
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -65,21 +64,8 @@ export const useSearchForm = (
       const repositoryQuery = repositoryInput.trim();
       const userQuery = userInput.trim();
       
-      // Verificar si hay filtros avanzados aplicados (excluyendo sort y order que siempre tienen valores)
-      const hasAdvancedFilters = filters.language || 
-                                (filters.stars !== null && filters.stars !== undefined) ||
-                                filters.organization ||
-                                filters.createdDate ||
-                                filters.pushedDate ||
-                                filters.topic ||
-                                filters.size;
-      
-      // Si no hay queries ni filtros avanzados, no hacer búsqueda
-      if (!repositoryQuery && !userQuery && !hasAdvancedFilters) {
-        return;
-      }
-      
-      // Realizar búsqueda con los queries proporcionados
+      // Realizar búsqueda con los queries y filtros proporcionados
+      // Siempre se agregará stars:>0 si no se especifica otro valor
       onManualSearch(repositoryQuery, userQuery, filters);
     },
     [repositoryInput, userInput, filters, onManualSearch, isLoading]
