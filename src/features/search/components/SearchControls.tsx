@@ -68,6 +68,7 @@ const SearchControls: React.FC<SearchControlsProps> = ({
           <div className="search-controls-input-group">
             <form onSubmit={handleSubmit} className="search-controls-input-container">
               {/* Input de Repositorio */}
+              <label htmlFor="repository-search" className="visually-hidden">Buscar repositorios:</label>
               <input
                 type="text"
                 value={repositoryInput}
@@ -79,6 +80,7 @@ const SearchControls: React.FC<SearchControlsProps> = ({
               />
 
               {/* Input de Usuario */}
+              <label htmlFor="user-search" className="visually-hidden">Buscar usuarios:</label>
               <input
                 type="text"
                 value={userInput}
