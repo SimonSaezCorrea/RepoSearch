@@ -8,16 +8,27 @@
 .header-search {
   color: white;
   text-align: center;
-  margin-bottom: 0;
+}
+
+/* Contenedor superior: logo + títulos */
+.header-search-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.header-search-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .header-search-title {
   font-size: 1.75rem;
-  font-weight: 700;
-  margin-bottom: var(--spacing-md);
   background: linear-gradient(135deg, #ffffff, #e2e8f0);
   background-clip: text;
-  -webkit-background-clip: text;
   color: transparent;
   line-height: 1.2;
 }
@@ -25,8 +36,33 @@
 .header-search-subtitle {
   font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.8);
-  margin-bottom: var(--spacing-lg);
   line-height: 1.4;
+  margin: var(--spacing-lg) 0;
+}
+
+/* Estilos del logo */
+.header-search-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+/* Responsive: en pantallas pequeñas apilar verticalmente */
+@media (max-width: 560px) {
+  .header-search-top {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .header-search-titles {
+    align-items: center;
+    text-align: center;
+  }
+
+  .header-search-logo {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 .header-search-button {

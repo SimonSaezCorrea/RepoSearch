@@ -7,12 +7,17 @@ interface HeaderSearchProps {
 const HeaderSearch = ({ onRandomSearch }: HeaderSearchProps) => {
   return (
     <header className="header-search">
-      <h1 className="header-search-title">
-        Explorador de Repositorios
-      </h1>
-      <p className="header-search-subtitle">
-        Descubre repositorios increíbles en GitHub
-      </p>
+      <div className="header-search-top">
+        <img
+          src="../../../../reposearch.svg"
+          alt="Logo de RepoSearch"
+          className="header-search-logo"
+        />
+        <div className="header-search-titles">
+          <h1 className="header-search-title">Explorador de Repositorios</h1>
+        </div>
+      </div>
+      <p className="header-search-subtitle">Descubre repositorios increíbles en GitHub</p>
       {onRandomSearch && (
         <button 
           className="header-search-button"
