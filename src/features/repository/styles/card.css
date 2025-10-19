@@ -293,7 +293,7 @@
 
 /* Badge de Tecnología */
 .card-tech-badge {
-  background: linear-gradient(to right, var(--color-accent-teal), var(--color-accent-orange));
+  background: var(--color-bg-secondary-dark);
   color: var(--color-text-inverse);
   padding: var(--spacing-xs) var(--spacing-md);
   border-radius: var(--radius-full);

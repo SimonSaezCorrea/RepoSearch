@@ -12,7 +12,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   onRandomSearch,
   isLoading = false,
   currentQuery = '',
-  queryType = '',
   repositoryCount = 0
 }) => {
   return (
@@ -28,7 +27,6 @@ const Sidebar: React.FC<SidebarProps> = ({
           onManualSearch={onManualSearch}
           isLoading={isLoading}
           currentQuery={currentQuery}
-          queryType={queryType}
           repositoryCount={repositoryCount}
         />
       </div>

@@ -4,6 +4,7 @@ import './App.css';
 import { ScrollableCardArea } from './features/repository';
 import { Sidebar } from './features/search';
 import { ErrorMessage, LoadingSpinner, useRepositoryData } from './shared';
+import "./shared/styles/shared/variables.css";
 
 function App() {
   const {

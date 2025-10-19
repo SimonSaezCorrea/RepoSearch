@@ -33,12 +33,9 @@ interface SearchControlsProps {
 const SearchControls: React.FC<SearchControlsProps> = ({ 
   onManualSearch, 
   isLoading = false, 
-  currentQuery = '', 
-  queryType = '', 
+  currentQuery = '',
   repositoryCount = 0 
 }) => {
-  // Evitar warning de variable no usada
-  console.debug('SearchControls props:', { currentQuery, queryType, repositoryCount });
   
   const {
     repositoryInput,
