@@ -1,7 +1,7 @@
 import { GitFork, Github, HardDrive, Star } from 'lucide-react';
 import { useCallback } from 'react';
 
-import '../styles/Card.css';
+import '../styles/card.css';
 import type { CardProps } from '../types/card';
 import { formatProjectName, formatRepoSize, openInNewTab } from '../utils/formatUtils';
 
