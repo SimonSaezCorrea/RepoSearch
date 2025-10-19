@@ -9,7 +9,7 @@ const HeaderSearch = ({ onRandomSearch }: HeaderSearchProps) => {
     <header className="header-search">
       <div className="header-search-top">
         <img
-          src="../../../../reposearch.svg"
+          src="../../../../public/reposearch.svg"
           alt="Logo de RepoSearch"
           className="header-search-logo"
         />
