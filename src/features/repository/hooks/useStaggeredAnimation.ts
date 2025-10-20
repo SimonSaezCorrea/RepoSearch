@@ -17,6 +17,7 @@ export const useStaggeredAnimation = (
   
   const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
   const previousCountRef = useRef(previousCount);
+  const previousItemsLengthRef = useRef(itemsLength);
   const isInitialLoad = useRef(true);
 
   /**
@@ -47,23 +48,36 @@ export const useStaggeredAnimation = (
   useEffect(() => {
     
     if (itemsLength === 0) {
+      setVisibleCards(new Set());
+      previousCountRef.current = 0;
+      previousItemsLengthRef.current = 0;
       return;
     }
 
-    // Manejo de carga inicial
-    if (isInitialLoad.current && previousCount === 0) {
+    // Detectar nueva búsqueda: previousCount es 0 y hay items
+    const isNewSearch = previousCount === 0 && itemsLength > 0 && !isInitialLoad.current;
+    
+    // Detectar reemplazo completo: el número de items cambió drásticamente hacia abajo
+    const isFullReset = itemsLength < previousItemsLengthRef.current && previousCount === 0;
+
+    // Manejo de carga inicial O nueva búsqueda
+    if (isInitialLoad.current || isNewSearch || isFullReset) {
       const allVisibleSet = createVisibleSet(itemsLength);
       
       const initialTimer = setTimeout(() => {
         setVisibleCards(allVisibleSet);
         isInitialLoad.current = false;
+        // En nueva búsqueda, resetear a 0 para que la siguiente carga incremental funcione
+        previousCountRef.current = 0;
+        previousItemsLengthRef.current = itemsLength;
       }, ANIMATION.INITIAL_LOAD_DELAY_MS);
       
       return () => clearTimeout(initialTimer);
     }
     
-    // Manejo de carga incremental
-    if (previousCount > previousCountRef.current && !isInitialLoad.current) {
+    // Manejo de carga incremental (cargar más)
+    // Esta condición ahora funcionará correctamente después de nueva búsqueda
+    if (previousCount >= previousCountRef.current && itemsLength > previousItemsLengthRef.current) {
       // Asegurar que elementos previos permanezcan visibles
       setVisibleCards(prev => {
         const updated = new Set(prev);
@@ -79,6 +93,7 @@ export const useStaggeredAnimation = (
       }
       
       previousCountRef.current = previousCount;
+      previousItemsLengthRef.current = itemsLength;
     }
   }, [itemsLength, previousCount, createVisibleSet, animateNewElements]);
 
