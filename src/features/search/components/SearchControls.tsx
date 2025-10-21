@@ -201,7 +201,21 @@ const SearchControls: React.FC<SearchControlsProps> = ({
                         updateFilter('stars', null);
                       } else {
                         const numValue = parseInt(value);
-                        updateFilter('stars', isNaN(numValue) ? null : numValue);
+                        // Validar que el número no sea negativo
+                        if (!isNaN(numValue) && numValue >= 0) {
+                          updateFilter('stars', numValue);
+                        } else if (numValue < 0) {
+                          // Si es negativo, establecer a 0
+                          updateFilter('stars', 0);
+                        } else {
+                          updateFilter('stars', null);
+                        }
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      // Prevenir la entrada de los caracteres '-' y 'e'
+                      if (e.key === '-' || e.key === 'e' || e.key === 'E' || e.key === '+') {
+                        e.preventDefault();
                       }
                     }}
                     className="search-controls-filter-input"
