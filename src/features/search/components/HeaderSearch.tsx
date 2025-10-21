@@ -17,7 +17,7 @@ const HeaderSearch = ({ onRandomSearch }: HeaderSearchProps) => {
           <h1 className="header-search-title">Explorador de Repositorios</h1>
         </div>
       </div>
-      <p className="header-search-subtitle">Descubre repositorios increíbles en GitHub</p>
+      <p className="header-search-subtitle">Descubre repositorios de GitHub</p>
       {onRandomSearch && (
         <button 
           className="header-search-button"
