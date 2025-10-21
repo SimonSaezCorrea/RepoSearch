@@ -218,7 +218,7 @@ const SearchControls: React.FC<SearchControlsProps> = ({
                         e.preventDefault();
                       }
                     }}
-                    className="search-controls-filter-input"
+                    className="search-controls-filter-input search-controls-filter-input-number"
                     placeholder="ej: 0, 10, 100..."
                     disabled={isLoading}
                   />

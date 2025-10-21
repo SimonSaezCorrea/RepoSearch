@@ -320,6 +320,19 @@
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
+/* Ocultar flechitas del input number (Chrome, Safari, Edge) */
+.search-controls-filter-input-number::-webkit-outer-spin-button,
+.search-controls-filter-input-number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Ocultar flechitas del input number (Firefox) */
+.search-controls-filter-input-number {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 /* Estilos específicos para CustomSelect en filtros */
 .search-controls-filter-field .custom-select-wrapper {
   min-width: 0;
