@@ -1,5 +1,5 @@
 import { ChevronDown, ChevronUp, Search } from 'lucide-react';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 
 import { LoadingSpinner } from '../../../shared';
 import {
@@ -50,6 +50,15 @@ const SearchControls: React.FC<SearchControlsProps> = ({
     updateFilter,
     handleSubmit,
   } = useSearchForm(onManualSearch, isLoading);
+
+  // Obtener fecha actual en formato YYYY-MM-DD usando zona horaria local
+  const getTodayDate = useMemo(() => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }, []);
 
   return (
     <div className="search-controls-header">
@@ -221,6 +230,7 @@ const SearchControls: React.FC<SearchControlsProps> = ({
                     type="date"
                     value={filters.createdDate || ''}
                     onChange={(e) => updateFilter('createdDate', e.target.value)}
+                    max={getTodayDate}
                     className="search-controls-filter-input"
                     disabled={isLoading}
                   />
@@ -233,6 +243,7 @@ const SearchControls: React.FC<SearchControlsProps> = ({
                     type="date"
                     value={filters.pushedDate || ''}
                     onChange={(e) => updateFilter('pushedDate', e.target.value)}
+                    max={getTodayDate}
                     className="search-controls-filter-input"
                     disabled={isLoading}
                   />
