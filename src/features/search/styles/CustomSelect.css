@@ -22,6 +22,52 @@
   position: absolute !important;
 }
 
+/* Estilos de scroll consistentes con el resto de la aplicación */
+.custom-select__menu-list {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-secondary) var(--color-bg-tertiary);
+}
+
+/* Webkit Scrollbar Styling para el menú */
+.custom-select__menu-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-select__menu-list::-webkit-scrollbar-track {
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+}
+
+.custom-select__menu-list::-webkit-scrollbar-thumb {
+  background: var(--color-border-secondary);
+  border-radius: var(--radius-full);
+  transition: background-color var(--transition-normal);
+}
+
+.custom-select__menu-list::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-primary);
+}
+
+/* Estilos para modo oscuro */
+@media (prefers-color-scheme: dark) {
+  .custom-select__menu-list {
+    scrollbar-color: var(--color-border-secondary-dark) var(--color-bg-tertiary-dark);
+  }
+  
+  .custom-select__menu-list::-webkit-scrollbar-track {
+    background: var(--color-bg-tertiary-dark);
+  }
+  
+  .custom-select__menu-list::-webkit-scrollbar-thumb {
+    background: var(--color-border-secondary-dark);
+  }
+  
+  .custom-select__menu-list::-webkit-scrollbar-thumb:hover {
+    background: var(--color-border-primary-dark);
+  }
+}
+
 /* Estilo del contenedor de opción personalizada */
 .custom-select-option {
   display: flex;

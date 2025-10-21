@@ -47,6 +47,10 @@
   object-fit: contain;
 }
 
+.header-search-logo:hover {
+  cursor: pointer;
+}
+
 /* Responsive: en pantallas pequeñas apilar verticalmente */
 @media (max-width: 560px) {
   .header-search-top {

@@ -1,7 +1,12 @@
+import { openInNewTab } from '../../repository/utils/formatUtils';
 import '../styles/HeaderSearch.css';
 
 interface HeaderSearchProps {
   onRandomSearch?: () => void;
+}
+
+const handleLogoClick = () => {
+  openInNewTab('https://github.com/SimonSaezCorrea/RepoSearch');
 }
 
 const HeaderSearch = ({ onRandomSearch }: HeaderSearchProps) => {
@@ -12,6 +17,7 @@ const HeaderSearch = ({ onRandomSearch }: HeaderSearchProps) => {
           src="/reposearch.svg"
           alt="Logo de RepoSearch"
           className="header-search-logo"
+          onClick={handleLogoClick}
         />
         <div className="header-search-titles">
           <h1 className="header-search-title">Explorador de Repositorios</h1>

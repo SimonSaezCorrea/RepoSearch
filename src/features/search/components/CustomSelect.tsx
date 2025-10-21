@@ -25,6 +25,24 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   const selectRef = useRef<HTMLDivElement>(null);
   const [dynamicMenuPlacement, setDynamicMenuPlacement] = useState<'auto' | 'bottom' | 'top'>(menuPlacement);
 
+  // Función para calcular el tamaño dinámico del menú
+  const calculateDynamicMenuHeight = () => {
+    const optionHeight = 40; // Altura estimada por opción
+    const menuPadding = 20; // Padding del menú
+    const maxVisibleOptions = 3; // Máximo de opciones visibles sin scroll
+    
+    const totalHeight = options.length * optionHeight + menuPadding;
+    const maxHeight = maxVisibleOptions * optionHeight + menuPadding;
+    
+    // Si hay 3 opciones o menos, usar altura exacta
+    if (options.length <= maxVisibleOptions) {
+      return totalHeight;
+    }
+    
+    // Si hay más de 3 opciones, usar altura máxima y permitir scroll
+    return Math.min(maxHeight, maxMenuHeight);
+  };
+
   // Función para calcular la colocación inteligente del menú
   const calculateSmartPlacement = () => {
     if (!smartPlacement || !selectRef.current) return menuPlacement;
@@ -33,7 +51,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     const viewportHeight = window.innerHeight;
     const spaceBelow = viewportHeight - rect.bottom;
     const spaceAbove = rect.top;
-    const estimatedMenuHeight = Math.min(maxMenuHeight, options.length * 40 + 20); // Estimación de altura del menú
+    const estimatedMenuHeight = calculateDynamicMenuHeight(); // Usar altura dinámica
 
     // Si hay suficiente espacio abajo, usar 'bottom'
     if (spaceBelow >= estimatedMenuHeight) {
@@ -138,8 +156,8 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     menuList: (provided) => ({
       ...provided,
       padding: 0,
-      maxHeight: `${maxMenuHeight}px`, // Usar altura configurable
-      overflowY: 'auto'
+      maxHeight: `${calculateDynamicMenuHeight()}px`, // Usar altura dinámica
+      overflowY: options.length > 3 ? 'auto' : 'visible' // Solo mostrar scroll si hay más de 3 opciones
     }),
     
     option: (provided, state) => ({
