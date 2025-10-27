@@ -146,22 +146,10 @@
   color: var(--color-text-secondary);
 }
 
-@media (prefers-color-scheme: dark) {
-  .card-grid-loading {
-    color: var(--color-text-secondary-dark);
-  }
-}
-
 .card-grid-empty {
   text-align: center;
   padding: var(--spacing-4xl);
   color: var(--color-text-tertiary);
-}
-
-@media (prefers-color-scheme: dark) {
-  .card-grid-empty {
-    color: var(--color-text-tertiary-dark);
-  }
 }
 
 .card-grid-error {

@@ -21,6 +21,8 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.1);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
 }
 
 /* Contenido principal del sidebar */
@@ -71,19 +73,5 @@
     padding: var(--spacing-md);
     max-height: none;
     overflow-y: visible;
-  }
-}
-
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-  .sidebar {
-    background: linear-gradient(135deg, 
-      var(--color-primary-dark) 0%, 
-      #1a2332 100%);
-  }
-  
-  .sidebar-header {
-    background: rgba(0, 0, 0, 0.1);
-    border-bottom-color: rgba(255, 255, 255, 0.05);
   }
 }
