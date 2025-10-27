@@ -49,25 +49,6 @@
   background: var(--color-border-primary);
 }
 
-/* Estilos para modo oscuro */
-@media (prefers-color-scheme: dark) {
-  .custom-select__menu-list {
-    scrollbar-color: var(--color-border-secondary-dark) var(--color-bg-tertiary-dark);
-  }
-  
-  .custom-select__menu-list::-webkit-scrollbar-track {
-    background: var(--color-bg-tertiary-dark);
-  }
-  
-  .custom-select__menu-list::-webkit-scrollbar-thumb {
-    background: var(--color-border-secondary-dark);
-  }
-  
-  .custom-select__menu-list::-webkit-scrollbar-thumb:hover {
-    background: var(--color-border-primary-dark);
-  }
-}
-
 /* Estilo del contenedor de opción personalizada */
 .custom-select-option {
   display: flex;
@@ -131,50 +112,6 @@
   .custom-select-icon {
     font-size: 0.9rem;
     width: 18px;
-  }
-}
-
-/* Override para focus states en modo oscuro si se implementa */
-/* Estilos para modo oscuro */
-@media (prefers-color-scheme: dark) {
-  .custom-select__control {
-    background-color: var(--color-bg-primary-dark) !important;
-    border-color: var(--color-border-primary-dark) !important;
-    color: var(--color-text-primary-dark) !important;
-  }
-  
-  .custom-select__control--has-value {
-    background-color: var(--color-bg-secondary-dark) !important;
-  }
-  
-  .custom-select__control--has-value:hover {
-    background-color: var(--color-bg-tertiary-dark) !important;
-  }
-  
-  .custom-select__single-value {
-    color: var(--color-text-primary-dark) !important;
-  }
-  
-  .custom-select__menu {
-    background-color: var(--color-bg-primary-dark) !important;
-    border-color: var(--color-border-primary-dark) !important;
-  }
-  
-  .custom-select__option {
-    color: var(--color-text-primary-dark) !important;
-  }
-  
-  .custom-select__option--is-selected {
-    background-color: var(--color-primary) !important;
-    color: white !important;
-  }
-  
-  .custom-select__option--is-focused {
-    background-color: var(--color-bg-secondary-dark) !important;
-  }
-  
-  .custom-select__placeholder {
-    color: var(--color-text-tertiary-dark) !important;
   }
 }
 
