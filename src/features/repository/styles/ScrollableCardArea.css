@@ -39,20 +39,6 @@
   background: var(--color-border-primary);
 }
 
-@media (prefers-color-scheme: dark) {
-  .scrollable-card-area-content::-webkit-scrollbar-track {
-    background: var(--color-bg-tertiary-dark);
-  }
-  
-  .scrollable-card-area-content::-webkit-scrollbar-thumb {
-    background: var(--color-border-secondary-dark);
-  }
-  
-  .scrollable-card-area-content::-webkit-scrollbar-thumb:hover {
-    background: var(--color-border-primary-dark);
-  }
-}
-
 @media (min-width: 640px) {
   .scrollable-card-area-content {
     padding: var(--spacing-2xl);
@@ -136,12 +122,6 @@
   font-weight: 500;
 }
 
-@media (prefers-color-scheme: dark) {
-  .scrollable-card-area-end-message {
-    color: var(--color-text-tertiary-dark);
-  }
-}
-
 /* ==============================================
    ESTADO VACÍO
    ============================================== */
@@ -163,19 +143,7 @@
   margin-bottom: var(--spacing-sm);
 }
 
-@media (prefers-color-scheme: dark) {
-  .scrollable-card-area-empty-title {
-    color: var(--color-text-primary-dark);
-  }
-}
-
 .scrollable-card-area-empty-message {
   color: var(--color-text-tertiary);
   font-size: 0.875rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  .scrollable-card-area-empty-message {
-    color: var(--color-text-tertiary-dark);
-  }
 }

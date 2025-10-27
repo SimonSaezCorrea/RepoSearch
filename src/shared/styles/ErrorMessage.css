@@ -32,23 +32,11 @@
   margin-bottom: var(--spacing-sm);
 }
 
-@media (prefers-color-scheme: dark) {
-  .error-message-title {
-    color: var(--color-text-secondary-dark);
-  }
-}
-
 .error-message-text {
   color: var(--color-text-secondary);
   margin-bottom: var(--spacing-lg);
   font-size: 0.875rem;
   line-height: 1.5;
-}
-
-@media (prefers-color-scheme: dark) {
-  .error-message-text {
-    color: var(--color-text-tertiary-dark);
-  }
 }
 
 .error-message-retry-button {
@@ -79,39 +67,21 @@
 
 /* Variantes de error */
 .error-message-container--network {
-  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  background: linear-gradient(135deg, #1f1411, #180a0a);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border-error);
 }
 
-@media (prefers-color-scheme: dark) {
-  .error-message-container--network {
-    background: linear-gradient(135deg, #1f1411, #180a0a);
-  }
-}
-
 .error-message-container--404 {
-  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  background: linear-gradient(135deg, #1f2937, #111827);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border-secondary);
 }
 
-@media (prefers-color-scheme: dark) {
-  .error-message-container--404 {
-    background: linear-gradient(135deg, #1f2937, #111827);
-  }
-}
-
 .error-message-container--warning {
-  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  background: linear-gradient(135deg, #1e1611, #1a1308);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border-warning);
-}
-
-@media (prefers-color-scheme: dark) {
-  .error-message-container--warning {
-    background: linear-gradient(135deg, #1e1611, #1a1308);
-  }
 }
 
 /* Estados inline para errores menores */

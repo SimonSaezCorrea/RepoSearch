@@ -15,9 +15,7 @@
 .app-sidebar {
   width: 350px;
   min-width: 350px;
-  background: linear-gradient(135deg, 
-    var(--color-primary-blue) 0%, 
-    var(--color-bg-primary-dark) 100%);
+  background: var(--color-bg-primary);
   border-right: 1px solid var(--color-border-primary);
   display: flex;
   flex-direction: column;
@@ -57,6 +55,7 @@
    ALERTAS Y UTILIDADES
    ============================================== */
 
+
 /* Alertas */
 .alert {
   padding: var(--spacing-md);
@@ -66,22 +65,22 @@
 }
 
 .alert-warning {
-  background-color: #fef3cd;
-  border-color: #ffeaa7;
-  color: #856404;
+  background-color: rgba(255, 193, 7, 0.1);
+  border-color: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
 }
 
 .alert-error {
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  color: #721c24;
-}
+    background-color: rgba(220, 53, 69, 0.1);
+    border-color: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+  }
 
 .alert-info {
-  background-color: #d1ecf1;
-  border-color: #bee5eb;
-  color: #0c5460;
-}
+    background-color: rgba(13, 202, 240, 0.1);
+    border-color: rgba(13, 202, 240, 0.2);
+    color: #0dcaf0;
+  }
 
 .alert-container {
   max-width: 1200px;
@@ -112,7 +111,7 @@
 }
 
 .alert-title--warning {
-  color: #856404;
+  color: #ffc107;
 }
 
 .alert-message {
@@ -120,11 +119,11 @@
 }
 
 .alert-message--warning {
-  color: #856404;
+  color: rgba(255, 193, 7, 0.8);
 }
 
 .alert-message--info {
-  color: #0c5460;
+  color: rgba(13, 202, 240, 0.8);
   font-size: 0.875rem;
 }
 
@@ -168,51 +167,3 @@
   }
 }
 
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-  .app-container {
-    background-color: var(--color-bg-primary-dark);
-  }
-  
-  .app-sidebar {
-    background: linear-gradient(135deg, 
-      var(--color-primary-dark) 0%, 
-      #1a2332 100%);
-    border-right-color: var(--color-border-primary-dark);
-  }
-  
-  .app-alerts {
-    background-color: var(--color-bg-secondary-dark);
-    border-bottom-color: var(--color-border-primary-dark);
-  }
-  
-  .alert-warning {
-    background-color: rgba(255, 193, 7, 0.1);
-    border-color: rgba(255, 193, 7, 0.2);
-    color: #ffc107;
-  }
-  
-  .alert-error {
-    background-color: rgba(220, 53, 69, 0.1);
-    border-color: rgba(220, 53, 69, 0.2);
-    color: #dc3545;
-  }
-  
-  .alert-info {
-    background-color: rgba(13, 202, 240, 0.1);
-    border-color: rgba(13, 202, 240, 0.2);
-    color: #0dcaf0;
-  }
-  
-  .alert-title--warning {
-    color: #ffc107;
-  }
-  
-  .alert-message--warning {
-    color: rgba(255, 193, 7, 0.8);
-  }
-  
-  .alert-message--info {
-    color: rgba(13, 202, 240, 0.8);
-  }
-}

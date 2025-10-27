@@ -34,13 +34,6 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .card {
-    background-color: var(--color-bg-secondary-dark);
-    border-color: var(--color-border-secondary-dark);
-  }
-}
-
 /* ==============================================
    CARD HEADER - Avatar, Usuario y Estrellas
    ============================================== */
@@ -48,12 +41,6 @@
 .card-header {
   padding: var(--spacing-lg);
   border-bottom: 1px solid var(--color-border-tertiary);
-}
-
-@media (prefers-color-scheme: dark) {
-  .card-header {
-    border-bottom-color: var(--color-border-secondary-dark);
-  }
 }
 
 .card-user-info {
@@ -99,12 +86,6 @@
   overflow: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  .card-language {
-    background-color: var(--color-bg-tertiary-dark);
-  }
-}
-
 .card-language-text {
   font-size: 0.875rem;
   color: var(--color-text-secondary);
@@ -129,12 +110,6 @@
 @media (min-width: 640px) {
   .card-username-truncated {
     max-width: calc(100% - 90px);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .card-language-text {
-    color: var(--color-text-secondary-dark);
   }
 }
 
@@ -164,12 +139,6 @@
   color: var(--color-text-secondary);
 }
 
-@media (prefers-color-scheme: dark) {
-  .card-star-count {
-    color: var(--color-text-secondary-dark);
-  }
-}
-
 /* ==============================================
    CARD CONTENT - Título y Descripción
    ============================================== */
@@ -189,24 +158,12 @@
   line-height: 1.25;
 }
 
-@media (prefers-color-scheme: dark) {
-  .card-title {
-    color: var(--color-text-primary-dark);
-  }
-}
-
 .card-description {
   font-size: 0.875rem;
   color: var(--color-text-secondary);
   line-height: 1.5;
   margin-top: var(--spacing-lg);
   overflow-wrap: break-word;
-}
-
-@media (prefers-color-scheme: dark) {
-  .card-description {
-    color: var(--color-text-tertiary-dark);
-  }
 }
 
 /* Metadatos del Repositorio */
@@ -217,12 +174,6 @@
   font-size: 0.75rem;
   color: var(--color-text-tertiary);
   margin-top: var(--spacing-lg);
-}
-
-@media (prefers-color-scheme: dark) {
-  .card-meta {
-    color: var(--color-text-tertiary-dark);
-  }
 }
 
 .card-meta-left {
@@ -256,13 +207,6 @@
   color: var(--color-text-tertiary);
 }
 
-@media (prefers-color-scheme: dark) {
-  .card-size-icon,
-  .card-fork-icon {
-    color: var(--color-text-tertiary-dark);
-  }
-}
-
 /* ==============================================
    CARD FOOTER - Tecnología y Enlaces
    ============================================== */
@@ -275,12 +219,6 @@
   align-items: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  .card-footer {
-    background-color: var(--color-bg-tertiary-dark);
-  }
-}
-
 .card-footer-left {
   display: flex;
   align-items: center;
@@ -289,7 +227,7 @@
 
 /* Badge de Tecnología */
 .card-tech-badge {
-  background: var(--color-bg-secondary-dark);
+  background: var(--color-bg-secondary);
   color: var(--color-text-inverse);
   padding: var(--spacing-xs) var(--spacing-md);
   border-radius: var(--radius-full);
@@ -310,12 +248,6 @@
   background-color: var(--color-hover-bg);
 }
 
-@media (prefers-color-scheme: dark) {
-  .card-github-link:hover {
-    background-color: var(--color-hover-bg-dark);
-  }
-}
-
 .card-github-icon {
   width: 1.25rem;
   height: 1.25rem;
@@ -325,14 +257,4 @@
 
 .card-github-link:hover .card-github-icon {
   color: var(--color-text-primary);
-}
-
-@media (prefers-color-scheme: dark) {
-  .card-github-icon {
-    color: var(--color-text-tertiary-dark);
-  }
-  
-  .card-github-link:hover .card-github-icon {
-    color: var(--color-text-primary-dark);
-  }
 }

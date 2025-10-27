@@ -44,12 +44,6 @@
   font-size: 0.875rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  .loading-spinner-text {
-    color: var(--color-text-tertiary-dark);
-  }
-}
-
 .loading-spinner-sr-only {
   position: absolute;
   width: 1px;

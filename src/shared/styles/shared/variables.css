@@ -15,41 +15,24 @@
   --color-yellow: #fbbf24;
   
   /* Fondos */
-  --color-bg-primary: #ffffff;
-  --color-bg-secondary: #f8fafc;
-  --color-bg-tertiary: #f1f5f9;
-  --color-bg-quaternary: #e2e8f0;
-  
-  /* Fondos Modo Oscuro */
-  --color-bg-primary-dark: #0f172a;
-  --color-bg-secondary-dark: #1e293b;
-  --color-bg-tertiary-dark: #334155;
-  --color-bg-quaternary-dark: #475569;
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-tertiary: #334155;
+  --color-bg-quaternary: #475569;
   
   /* Texto */
-  --color-text-primary: #1e293b;
-  --color-text-secondary: #64748b;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
   --color-text-tertiary: #94a3b8;
   --color-text-inverse: #ffffff;
   
-  /* Texto Modo Oscuro */
-  --color-text-primary-dark: #f1f5f9;
-  --color-text-secondary-dark: #cbd5e1;
-  --color-text-tertiary-dark: #94a3b8;
-  
   /* Bordes */
-  --color-border-primary: #d1d5db;
-  --color-border-secondary: #e5e7eb;
-  --color-border-tertiary: #f3f4f6;
-  
-  /* Bordes Modo Oscuro */
-  --color-border-primary-dark: #374151;
-  --color-border-secondary-dark: #4b5563;
-  --color-border-tertiary-dark: #6b7280;
+  --color-border-primary: #374151;
+  --color-border-secondary: #4b5563;
+  --color-border-tertiary: #6b7280;
   
   /* Estados de Hover */
-  --color-hover-bg: #f9fafb;
-  --color-hover-bg-dark: #374151;
+  --color-hover-bg: #374151;
   
   /* Colores de Estado */
   --color-bg-error: #fef2f2;
